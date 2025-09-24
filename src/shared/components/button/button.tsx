@@ -13,7 +13,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
   const { type = 'button', onClick, variant = 'primary', children } = props;
 
   return (
-    <button className={clsx(styles.button, variant)} type={type} onClick={onClick}>
+    <button className={clsx(styles.button, styles[variant])} type={type} onClick={onClick}>
       {children}
     </button>
   )
