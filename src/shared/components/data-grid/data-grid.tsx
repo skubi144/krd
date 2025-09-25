@@ -1,3 +1,4 @@
+import styles from './components/common/data-grid.module.scss'
 import type { DataGridProps } from '@/shared/components/data-grid/components/common/types.ts'
 import { DataGridContext } from '@/shared/components/data-grid/components/controllers/data-grid.context.tsx'
 import { Header } from '@/shared/components/data-grid/components/header/header.tsx'
@@ -17,7 +18,7 @@ export const DataGrid = <
 
 const DataGridContent = () => {
   return (
-    <div>
+    <div className={styles['data-grid']}>
       <Header />
       <Rows />
     </div>

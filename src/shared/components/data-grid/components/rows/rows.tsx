@@ -1,3 +1,4 @@
+import styles from '../common/data-grid.module.scss'
 import {
   useColumns,
   useRows,
@@ -11,17 +12,14 @@ export const Cell = (props: CellProps) => {
   const { value, columnId } = props
   const [_, _1, hash] = useColumns()
   const columnDef = hash[columnId]
-  // console.log( value)
-  // const valueToRender = isValidElement(value) ? value : ''
-  //
-  //
-  //
-  // return <div>{valueToRender}</div>
+
   switch (columnDef.type) {
     case 'date':
-      return value as string
+      return <div className={styles['data-grid__cell']}>{value as string}</div>
+
     case 'text':
-      return value as string
+      return <div className={styles['data-grid__cell']}>{value as string}</div>
+
     default:
       return ''
   }
@@ -33,11 +31,19 @@ export const Rows = () => {
   const [rows] = rowsState
   const [columns] = columnsState
 
-  return rows.map((row, id) => (
-    <div key={id}>
-      {columns.map((column) => (
-        <Cell key={column.id} columnId={column.id} value={row[column.id]} />
+  return (
+    <div className={styles['data-grid__rows']}>
+      {rows.map((row, id) => (
+        <div
+          key={id}
+          className={styles['data-grid__row']}
+          style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
+        >
+          {columns.map((column) => (
+            <Cell key={column.id} columnId={column.id} value={row[column.id]} />
+          ))}
+        </div>
       ))}
     </div>
-  ))
+  )
 }

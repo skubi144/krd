@@ -1,0 +1,59 @@
+.data-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+
+  &__header {
+    display: grid;
+    background: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+
+    &-cell {
+      padding: 8px 12px;
+      border-right: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__row {
+    display: grid;
+    border-bottom: 1px solid #eee;
+
+    &:nth-child(even) {
+      background: #fafafa;
+    }
+
+    &:hover {
+      background: #f1f3f5;
+    }
+  }
+
+  &__cell {
+    padding: 8px 12px;
+    border-right: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}

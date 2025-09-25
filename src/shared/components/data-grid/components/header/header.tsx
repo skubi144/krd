@@ -1,3 +1,4 @@
+import styles from '../common/data-grid.module.scss'
 import { useColumns } from '@/shared/components/data-grid/components/controllers/data-grid.context.tsx'
 
 export const Header = () => {
@@ -5,9 +6,14 @@ export const Header = () => {
   const [columns] = state
 
   return (
-    <div>
+    <div
+      className={styles["data-grid__header"]}
+      style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
+    >
       {columns.map((column) => (
-        <div key={column.id.toString()}>{column.label}</div>
+        <div
+          className={styles["data-grid__header-cell"]}
+          key={column.id.toString()}>{column.label}</div>
       ))}
     </div>
   )
