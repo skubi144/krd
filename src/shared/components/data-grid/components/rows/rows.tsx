@@ -1,8 +1,10 @@
 import styles from '../common/data-grid.module.scss'
+import type { Key } from 'react'
 import {
   useColumns,
   useRows,
 } from '@/shared/components/data-grid/components/controllers/data-grid.context.tsx'
+import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/common/utils.ts'
 
 type CellProps = {
   columnId: string
@@ -33,11 +35,11 @@ export const Rows = () => {
 
   return (
     <div className={styles['data-grid__rows']}>
-      {rows.map((row, id) => (
+      {rows.map((row) => (
         <div
-          key={id}
+          key={row['id'] as Key}
           className={styles['data-grid__row']}
-          style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
+          style={getGridColumnStyleDef(columns)}
         >
           {columns.map((column) => (
             <Cell key={column.id} columnId={column.id} value={row[column.id]} />

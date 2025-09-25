@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 export type CommonColumnDef<T extends Record<string, unknown>> = {
   id: keyof T
   label?: string
+  width?: string
 }
 
 export interface TextColumnDef<T extends Record<string, unknown>>
@@ -39,7 +40,16 @@ export type RowsControllerResult<T extends Record<string, unknown>> = readonly [
   Dispatch<SetStateAction<Array<T>>>,
 ]
 
+type SortingOrder = 'asc' | 'desc'
+type SortingDef<T extends Record<string, unknown>> = {
+  id: keyof T
+  order: SortingOrder
+  value: T
+}
+
 export type DataGridProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
+  onSortChange?: (model: Array<SortingDef<TData>>) => void
   rows: Array<TData>
+  sorting?: Array<SortingDef<TData>>
 }
