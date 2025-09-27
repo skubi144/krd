@@ -1,6 +1,7 @@
 interface FetchApiOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   url: string
+  body?: unknown
 }
 export interface ApiError<T = unknown> extends Error {
   status: number
@@ -10,10 +11,14 @@ export interface ApiError<T = unknown> extends Error {
 export async function fetchApi<TData = unknown, TError = ApiError<undefined>>(
   options: FetchApiOptions,
 ): Promise<TData> {
-  const { url, method = 'GET' } = options
+  const { url, method = 'GET', body } = options
   const response = await fetch(
     `https://rekrutacja-webhosting-it.krd.pl${url}`,
-    { method, headers: { 'Content-Type': 'application/json' } },
+    {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    },
   )
   let data: unknown
 

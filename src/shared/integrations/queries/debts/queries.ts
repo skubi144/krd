@@ -7,5 +7,17 @@ export const topDebtsQuery = () => ({
     fetchApi<Array<Debt>, undefined>({
       url: '/api/Recruitment/GetTopDebts',
     }),
-  initialData:[]
+  initialData: [],
+})
+
+export const filteredDebtsQuery = (phrase?: string) => ({
+  queryKey: ['debt', 'filtered', phrase],
+  queryFn: () =>
+    fetchApi<Array<Debt>, undefined>({
+      url: '/api/Recruitment/GetFilteredDebts',
+      method: 'POST',
+      body: { phrase },
+    }),
+  enabled: !!phrase,
+  initialData: [],
 })
