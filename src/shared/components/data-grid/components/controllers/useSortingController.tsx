@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useTransition } from 'react'
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import type {
   ColumnComparer,
   ColumnDef,
@@ -6,6 +6,7 @@ import type {
   OnSortChangeHandler,
   SortingControllerResult,
   SortingDef,
+  SortingHash,
 } from '@/shared/components/data-grid/components/common/types.ts'
 
 const defaultDateComparer: ColumnComparer = (a, b) => {
@@ -70,15 +71,17 @@ const changeSortingModel = <T extends Record<string, unknown>>(
   const sortingModelId = sortingModelDef.findIndex(
     (model) => model.id === columnId,
   )
+
   if (sortingModelId < 0) {
     nextSortingModelDef.push({ id: columnId, order: 'asc' })
+    return nextSortingModelDef
   }
-
   const newSortingModel = { ...sortingModelDef[sortingModelId] }
 
   switch (newSortingModel.order) {
     case 'asc':
       newSortingModel.order = 'desc'
+      nextSortingModelDef.splice(sortingModelId, 1, newSortingModel)
       break
     case 'desc':
       nextSortingModelDef.splice(sortingModelId, 1)
@@ -98,7 +101,13 @@ export const useSortingController = <T extends Record<string, unknown>>(
   const [sorting, setSorting] = useState<Array<SortingDef<T>>>(
     () => initialSortingModelDef,
   )
-  const [_, startTransition] = useTransition()
+  const [busy, startTransition] = useTransition()
+
+  useEffect(() => {
+    startTransition(() => {
+      setSortedRows(sortRows(rowsDef, columnsHash, sorting))
+    })
+  }, [rowsDef, columnsHash])
 
   const onSortChange = useCallback<OnSortChangeHandler<T>>(
     (columnId) => {
@@ -115,12 +124,12 @@ export const useSortingController = <T extends Record<string, unknown>>(
 
   return useMemo<SortingControllerResult<T>>(() => {
     const entries = sorting.map(
-      (sortingDef) => [sortingDef.id, sortingDef] as const,
+      (sortingDef, index) => [sortingDef.id, { ...sortingDef, index }] as const,
     )
     const hash = Object.fromEntries(entries) as Partial<
-      Record<keyof T, SortingDef<T>>
+      Record<keyof T, SortingHash<T>>
     >
 
-    return { rows: sortedRows, onSortChange, sorting,sortingHash: hash }
+    return { rows: sortedRows, onSortChange, sorting, sortingHash: hash }
   }, [sortedRows, sorting, onSortChange])
 }

@@ -5,8 +5,9 @@ import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/
 export const Header = <T extends Record<string, unknown>>(
   props: HeaderProps<T>,
 ) => {
-  const { columns: columnsDef } = props
+  const { columns: columnsDef, sortingHash, onSortChange } = props
   const [columns] = columnsDef
+
   return (
     <div
       className={styles['data-grid__header']}
@@ -16,8 +17,12 @@ export const Header = <T extends Record<string, unknown>>(
         <div
           className={styles['data-grid__header-cell']}
           key={column.id.toString()}
+          onClick={() => onSortChange?.(column.id)}
         >
           {column.label}
+
+          {sortingHash?.[column.id]?.order}
+          {sortingHash?.[column.id]?.index}
         </div>
       ))}
     </div>

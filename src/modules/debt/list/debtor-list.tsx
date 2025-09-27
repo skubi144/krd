@@ -1,30 +1,15 @@
 import styles from './debtor-list.module.scss'
-import type { ColumnDef } from '@/shared/components/data-grid/components/common/types.ts'
 import { Input } from '@/shared/components/input/input.tsx'
 import { Button } from '@/shared/components/button/button.tsx'
 import { DataGrid } from '@/shared/components/data-grid/data-grid.tsx'
 import { useListController } from '@/shared/components/data-grid/components/controllers/useListController.tsx'
-
-type User = {
-  id: string
-  name: string
-}
-
-const columns: Array<ColumnDef<User>> = [
-  {
-    id: 'id',
-    type: 'text',
-    label: 'Id',
-  },
-  {
-    id: 'name',
-    type: 'text',
-    label: 'Nazwa',
-  },
-]
+import { useTopDebts } from '@/shared/integrations/queries'
+import { useColumnsDef } from '@/modules/debt/list/useColumnsDef.ts'
 
 export const DebtorList = () => {
-  const listProps = useListController({ columns, url: '' })
+  const {data} = useTopDebts()
+  const columns = useColumnsDef()
+  const listProps = useListController({ columns, rows:data })
 
   return (
     <>

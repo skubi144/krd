@@ -55,10 +55,14 @@ export type OnSortChangeHandler<T extends Record<string, unknown>> = (
   columnId: keyof T,
 ) => void
 
+export type SortingHash<T extends Record<string, unknown>> = {
+  index: number
+} & SortingDef<T>
+
 export type SortingControllerResult<T extends Record<string, unknown>> = {
   rows: Array<T>
   sorting: Array<SortingDef<T>>
-  sortingHash: Partial<Record<keyof T, SortingDef<T>>>
+  sortingHash: Partial<Record<keyof T, SortingHash<T>>>
   onSortChange: OnSortChangeHandler<T>
 }
 
@@ -67,17 +71,19 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
   onSortChange?: OnSortChangeHandler<TData>
   rows: Array<TData>
   sorting?: Array<SortingDef<TData>>
+  sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
-  url: string
+  rows: Array<TData>
 }
 
 export type HeaderProps<TData extends Record<string, unknown>> = {
   columns: ColumnsControllerResult<TData>
   onSortChange?: OnSortChangeHandler<TData>
   sorting?: Array<SortingDef<TData>>
+  sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
 }
 
 export type RowsProps<TData extends Record<string, unknown>> = {
