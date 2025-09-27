@@ -1,18 +1,21 @@
 import styles from '../common/data-grid.module.scss'
 import type { Key } from 'react'
-import {
-  useColumns,
-  useRows,
-} from '@/shared/components/data-grid/components/controllers/data-grid.context.tsx'
+import type {
+  ColumnsControllerResult,
+  RowsProps,
+} from '@/shared/components/data-grid/components/common/types.ts'
 import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/common/utils.ts'
 
-type CellProps = {
+type CellProps<TData extends Record<string, unknown>> = {
+  columns: ColumnsControllerResult<TData>
   columnId: string
   value?: unknown
 }
-export const Cell = (props: CellProps) => {
-  const { value, columnId } = props
-  const [_, _1, hash] = useColumns()
+export const Cell = <T extends Record<string, unknown>>(
+  props: CellProps<T>,
+) => {
+  const { value, columnId, columns } = props
+  const [_, _2, hash] = columns
   const columnDef = hash[columnId]
 
   switch (columnDef.type) {
@@ -27,10 +30,11 @@ export const Cell = (props: CellProps) => {
   }
 }
 
-export const Rows = () => {
-  const columnsState = useColumns()
-  const rowsState = useRows()
-  const [rows] = rowsState
+export const Rows = <T extends Record<string, unknown>>(
+  props: RowsProps<T>,
+) => {
+  const { rows, columns: columnsState } = props
+
   const [columns] = columnsState
 
   return (
@@ -42,7 +46,13 @@ export const Rows = () => {
           style={getGridColumnStyleDef(columns)}
         >
           {columns.map((column) => (
-            <Cell key={column.id} columnId={column.id} value={row[column.id]} />
+            // @ts-ignore
+            <Cell
+              key={column.id as Key}
+              columnId={column.id}
+              value={row[column.id]}
+              columns={columnsState}
+            />
           ))}
         </div>
       ))}

@@ -37,7 +37,7 @@ export type ColumnsControllerResult<T extends Record<string, unknown>> =
   readonly [
     Array<ColumnDef<T>>,
     Dispatch<SetStateAction<Array<ColumnDef<T>>>>,
-    Record<string, ColumnDef<T>>,
+    Record<keyof T, ColumnDef<T>>,
   ]
 
 export type RowsControllerResult<T extends Record<string, unknown>> = readonly [
@@ -57,13 +57,30 @@ export type OnSortChangeHandler<T extends Record<string, unknown>> = (
 
 export type SortingControllerResult<T extends Record<string, unknown>> = {
   rows: Array<T>
-  sorting: Partial<Record<keyof T, SortingDef<T>>>
+  sorting: Array<SortingDef<T>>
+  sortingHash: Partial<Record<keyof T, SortingDef<T>>>
   onSortChange: OnSortChangeHandler<T>
 }
 
 export type DataGridProps<TData extends Record<string, unknown>> = {
-  columns: Array<ColumnDef<TData>>
+  columns: ColumnsControllerResult<TData>
   onSortChange?: OnSortChangeHandler<TData>
   rows: Array<TData>
   sorting?: Array<SortingDef<TData>>
+}
+
+export type UseListControllerProps<TData extends Record<string, unknown>> = {
+  columns: Array<ColumnDef<TData>>
+  url: string
+}
+
+export type HeaderProps<TData extends Record<string, unknown>> = {
+  columns: ColumnsControllerResult<TData>
+  onSortChange?: OnSortChangeHandler<TData>
+  sorting?: Array<SortingDef<TData>>
+}
+
+export type RowsProps<TData extends Record<string, unknown>> = {
+  columns: ColumnsControllerResult<TData>
+  rows: Array<TData>
 }

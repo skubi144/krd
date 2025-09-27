@@ -14,7 +14,7 @@ export const useColumnsController = <T extends Record<string, unknown>>(
     const entries = columnsDef.map(
       (columnDef) => [columnDef.id, columnDef] as const,
     )
-    const hash = Object.fromEntries(entries)
+    const hash = Object.fromEntries(entries) as Record<keyof T, ColumnDef<T>>
 
     return [columns, setColumns, hash] as const
   }, [columns])

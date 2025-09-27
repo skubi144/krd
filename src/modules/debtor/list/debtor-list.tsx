@@ -3,6 +3,7 @@ import type { ColumnDef } from '@/shared/components/data-grid/components/common/
 import { Input } from '@/shared/components/input/input.tsx'
 import { Button } from '@/shared/components/button/button.tsx'
 import { DataGrid } from '@/shared/components/data-grid/data-grid.tsx'
+import { useListController } from '@/shared/components/data-grid/components/controllers/useListController.tsx'
 
 type User = {
   id: string
@@ -22,19 +23,9 @@ const columns: Array<ColumnDef<User>> = [
   },
 ]
 
-const rows: Array<User> = [
-  {
-    id: '1',
-    name: 'Miłosz',
-  },
-  {
-    id: '2',
-    name: 'Karolina',
-  },
-]
-
-
 export const DebtorList = () => {
+  const listProps = useListController({ columns, url: '' })
+
   return (
     <>
       <div className={styles.filters}>
@@ -44,7 +35,7 @@ export const DebtorList = () => {
         />
       </div>
       <div>
-        <DataGrid<User> columns={columns} rows={rows} />
+        <DataGrid {...listProps} />
       </div>
     </>
   )
