@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useTransition } from 'react'
 import type {
   ColumnComparer,
   ColumnDef,
@@ -8,7 +8,7 @@ import type {
   SortingDef,
 } from '@/shared/components/data-grid/components/common/types.ts'
 
-const defaultDateComparer:ColumnComparer = (a, b) => {
+const defaultDateComparer: ColumnComparer = (a, b) => {
   // Maybe timestamp
   if (typeof a === 'number' && typeof b === 'number') {
     return a - b
@@ -22,8 +22,9 @@ const defaultDateComparer:ColumnComparer = (a, b) => {
   const tb = Date.parse(String(b))
   return ta - tb
 }
-const defaultTextComparer:ColumnComparer = (a,b)=>String(a).localeCompare(String(b))
-const defaultComparer:ColumnComparer = ()=>0
+const defaultTextComparer: ColumnComparer = (a, b) =>
+  String(a).localeCompare(String(b))
+const defaultComparer: ColumnComparer = () => 0
 
 // TODO Try change me to map or smth - avoid unnecessary execution context
 const defaultCompare = (type: ColumnType): ColumnComparer => {
@@ -61,28 +62,64 @@ const sortRows = <T extends Record<string, unknown>>(
   })
 }
 
-const calculateSortingModel = <T extends Record<string, unknown,>(columnId: keyof T, Array<SortingDef<T>>)=>{}
+const changeSortingModel = <T extends Record<string, unknown>>(
+  columnId: keyof T,
+  sortingModelDef: Array<SortingDef<T>>,
+) => {
+  const nextSortingModelDef = [...sortingModelDef]
+  const sortingModelId = sortingModelDef.findIndex(
+    (model) => model.id === columnId,
+  )
+  if (sortingModelId < 0) {
+    nextSortingModelDef.push({ id: columnId, order: 'asc' })
+  }
+
+  const newSortingModel = { ...sortingModelDef[sortingModelId] }
+
+  switch (newSortingModel.order) {
+    case 'asc':
+      newSortingModel.order = 'desc'
+      break
+    case 'desc':
+      nextSortingModelDef.splice(sortingModelId, 1)
+      break
+    default:
+  }
+
+  return nextSortingModelDef
+}
 
 export const useSortingController = <T extends Record<string, unknown>>(
   rowsDef: Array<T>,
-  columnsHash: Record<string, ColumnDef<T>>,
+  columnsHash: Record<keyof T, ColumnDef<T>>,
   initialSortingModelDef: Array<SortingDef<T>> = [],
 ): SortingControllerResult<T> => {
   const [sortedRows, setSortedRows] = useState<Array<T>>(() => rowsDef)
   const [sorting, setSorting] = useState<Array<SortingDef<T>>>(
     () => initialSortingModelDef,
   )
+  const [_, startTransition] = useTransition()
 
-  const onSortChange = useCallback<OnSortChangeHandler<T>>((columnId) => {
+  const onSortChange = useCallback<OnSortChangeHandler<T>>(
+    (columnId) => {
+      startTransition(() => {
+        const nextSortingDef = changeSortingModel(columnId, sorting)
+        const nextSortedRows = sortRows(rowsDef, columnsHash, nextSortingDef)
 
-
-  }, [])
+        setSortedRows(nextSortedRows)
+        setSorting(nextSortingDef)
+      })
+    },
+    [sorting, sortedRows],
+  )
 
   return useMemo<SortingControllerResult<T>>(() => {
     const entries = sorting.map(
       (sortingDef) => [sortingDef.id, sortingDef] as const,
     )
-    const hash = Object.fromEntries(entries) as Partial<Record<keyof T, SortingDef<T>>>
+    const hash = Object.fromEntries(entries) as Partial<
+      Record<keyof T, SortingDef<T>>
+    >
 
     return { rows: sortedRows, onSortChange, sorting: hash }
   }, [sortedRows, sorting, onSortChange])

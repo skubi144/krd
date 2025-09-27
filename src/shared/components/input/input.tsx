@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { type ReactNode, useId } from 'react'
 import styles from './input.module.scss'
 import type { ChangeEventHandler, FC } from 'react'
 import type { FieldProps } from '@/shared/components/field/field.tsx'
@@ -10,7 +10,7 @@ interface InputProps extends Omit<FieldProps, 'id'> {
   value?: string
   onChange?: ChangeEventHandler<HTMLInputElement>
   name?: string
-  suffix?: React.ReactNode
+  suffix?: ReactNode
 }
 export const Input: FC<InputProps> = (props) => {
   const { suffix } = props
