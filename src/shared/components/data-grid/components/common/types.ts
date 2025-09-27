@@ -90,3 +90,9 @@ export type RowsProps<TData extends Record<string, unknown>> = {
   columns: ColumnsControllerResult<TData>
   rows: Array<TData>
 }
+
+export type CellProps<TData extends Record<string, unknown>> = {
+  columns: ColumnsControllerResult<TData>
+  columnId: string
+  value?: unknown
+}
