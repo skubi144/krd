@@ -1,7 +1,19 @@
-.wrapper{
+.wrapper {
   display: flex;
 }
 
 .input {
   padding: 1rem 1.5rem;
+  border: none;
+}
+
+.inputwrapper {
+  background-color: #fff;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  padding: 8px;
+  min-width:32px;
 }

@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-export type ColumnComparer<T = unknown> = (a: T, b: T) => number
+export type ColumnComparer = (a: unknown, b: unknown) => number
 export type CommonColumnDef<T extends Record<string, unknown>> = {
   id: keyof T
   label?: string
@@ -10,13 +10,13 @@ export type CommonColumnDef<T extends Record<string, unknown>> = {
 export interface TextColumnDef<T extends Record<string, unknown>>
   extends CommonColumnDef<T> {
   type: 'text'
-  compare?: ColumnComparer<T[CommonColumnDef<T>['id']]>
+  compare?: ColumnComparer
 }
 
 export interface DateColumnDef<T extends Record<string, unknown>>
   extends CommonColumnDef<T> {
   type: 'date'
-  compare?: ColumnComparer<T[CommonColumnDef<T>['id']]>
+  compare?: ColumnComparer
 }
 
 export type ColumnDef<T extends Record<string, unknown>> =

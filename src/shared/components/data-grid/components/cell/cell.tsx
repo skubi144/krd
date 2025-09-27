@@ -11,10 +11,8 @@ export const Cell = <T extends Record<string, unknown>>(
   switch (columnDef.type) {
     case 'date':
       return <div className={styles['data-grid__cell']}>{value as string}</div>
-
     case 'text':
       return <div className={styles['data-grid__cell']}>{value as string}</div>
-
     default:
       return ''
   }

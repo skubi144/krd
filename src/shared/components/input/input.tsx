@@ -1,27 +1,44 @@
-import { type ReactNode, useId } from 'react'
+import { forwardRef, useId } from 'react'
 import styles from './input.module.scss'
-import type { ChangeEventHandler, FC } from 'react'
+import type { InputHTMLAttributes, ReactNode } from 'react'
 import type { FieldProps } from '@/shared/components/field/field.tsx'
 import { Field } from '@/shared/components/field/field.tsx'
 
-interface InputProps extends Omit<FieldProps, 'id'> {
-  disabled?: boolean
-  placeholder?: string
-  value?: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  name?: string
+interface InputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'>,
+    Omit<FieldProps, 'id'> {
   suffix?: ReactNode
+  onClear?: () => void
 }
-export const Input: FC<InputProps> = (props) => {
-  const { suffix } = props
-  const id = useId()
 
-  return (
-    <Field id={id} {...props}>
-      <div className={styles.wrapper}>
-        <input className={styles.input} id={id} {...props} />
-        {suffix}
-      </div>
-    </Field>
-  )
-}
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ suffix, value, disabled, onClear, ...rest }, ref) => {
+    const id = useId()
+
+    return (
+      <Field id={id} {...rest}>
+        <div className={styles.wrapper}>
+          <div className={styles.inputwrapper}>
+            <input
+              id={id}
+              ref={ref}
+              className={styles.input}
+              disabled={disabled}
+              value={value}
+              {...rest}
+            />
+            <button
+              onClick={onClear}
+              type="button"
+              disabled={!value || disabled}
+              className={styles.button}
+            >
+              {value ? 'X' : ' '}
+            </button>
+          </div>
+          {suffix}
+        </div>
+      </Field>
+    )
+  },
+)
