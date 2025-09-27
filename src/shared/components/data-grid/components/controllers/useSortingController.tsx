@@ -130,6 +130,6 @@ export const useSortingController = <T extends Record<string, unknown>>(
       Record<keyof T, SortingHash<T>>
     >
 
-    return { rows: sortedRows, onSortChange, sorting, sortingHash: hash }
-  }, [sortedRows, sorting, onSortChange])
+    return { rows: sortedRows, onSortChange, sorting, sortingHash: hash, busy }
+  }, [sortedRows, sorting, onSortChange, busy])
 }

@@ -64,6 +64,7 @@ export type SortingControllerResult<T extends Record<string, unknown>> = {
   sorting: Array<SortingDef<T>>
   sortingHash: Partial<Record<keyof T, SortingHash<T>>>
   onSortChange: OnSortChangeHandler<T>
+  busy: boolean
 }
 
 export type DataGridProps<TData extends Record<string, unknown>> = {
