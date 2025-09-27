@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
+export type ColumnComparer<T = unknown> = (a: T, b: T) => number
 export type CommonColumnDef<T extends Record<string, unknown>> = {
   id: keyof T
   label?: string
@@ -9,16 +10,20 @@ export type CommonColumnDef<T extends Record<string, unknown>> = {
 export interface TextColumnDef<T extends Record<string, unknown>>
   extends CommonColumnDef<T> {
   type: 'text'
+  compare?: ColumnComparer<T[CommonColumnDef<T>['id']]>
 }
 
 export interface DateColumnDef<T extends Record<string, unknown>>
   extends CommonColumnDef<T> {
   type: 'date'
+  compare?: ColumnComparer<T[CommonColumnDef<T>['id']]>
 }
 
 export type ColumnDef<T extends Record<string, unknown>> =
   | TextColumnDef<T>
   | DateColumnDef<T>
+
+export type ColumnType = ColumnDef<Record<string, unknown>>['type']
 
 export type UseColumnsControllerProps<T extends Record<string, unknown>> = {
   columns: Array<ColumnDef<T>>
@@ -40,16 +45,25 @@ export type RowsControllerResult<T extends Record<string, unknown>> = readonly [
   Dispatch<SetStateAction<Array<T>>>,
 ]
 
-type SortingOrder = 'asc' | 'desc'
-type SortingDef<T extends Record<string, unknown>> = {
+export type SortingOrder = 'asc' | 'desc'
+export type SortingDef<T extends Record<string, unknown>> = {
   id: keyof T
   order: SortingOrder
-  value: T
+}
+
+export type OnSortChangeHandler<T extends Record<string, unknown>> = (
+  columnId: keyof T,
+) => void
+
+export type SortingControllerResult<T extends Record<string, unknown>> = {
+  rows: Array<T>
+  sorting: Partial<Record<keyof T, SortingDef<T>>>
+  onSortChange: OnSortChangeHandler<T>
 }
 
 export type DataGridProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
-  onSortChange?: (model: Array<SortingDef<TData>>) => void
+  onSortChange?: OnSortChangeHandler<TData>
   rows: Array<TData>
   sorting?: Array<SortingDef<TData>>
 }
