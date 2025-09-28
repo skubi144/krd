@@ -1,10 +1,12 @@
-import type { Dispatch, SetStateAction } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
 export type ColumnComparer = (a: unknown, b: unknown) => number
+export type ValueRenderer = (value: unknown) => ReactNode
 export type CommonColumnDef<T extends Record<string, unknown>> = {
   id: keyof T
   label?: string
   width?: string
+  render?: ValueRenderer
 }
 
 export interface TextColumnDef<T extends Record<string, unknown>>
@@ -73,7 +75,7 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
   rows: Array<TData>
   sorting?: Array<SortingDef<TData>>
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
-  loading?:boolean
+  loading?: boolean
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
