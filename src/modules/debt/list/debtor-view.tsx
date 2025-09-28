@@ -28,7 +28,8 @@ export const DebtorView = () => {
     defaultValues: { phrase: search.phrase ?? '' },
     resolver: zodResolver(debtorSearchSchema),
   })
-
+  const loading =
+    listProps.loading || topDebts.isFetching || filteredDebts.isFetching
   const onSubmit: SubmitHandler<DebtorForm> = async (data) => {
     await navigate({ search: data })
   }
@@ -58,7 +59,7 @@ export const DebtorView = () => {
         </form>
       </div>
       <div>
-        <DataGrid {...listProps} />
+        <DataGrid {...listProps} loading={loading} />
       </div>
     </>
   )

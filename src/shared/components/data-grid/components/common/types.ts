@@ -73,6 +73,7 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
   rows: Array<TData>
   sorting?: Array<SortingDef<TData>>
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
+  loading?:boolean
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {

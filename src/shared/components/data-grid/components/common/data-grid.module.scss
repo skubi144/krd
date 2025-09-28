@@ -3,8 +3,7 @@
   flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 6px;
-  overflow: hidden;
-  font-family: system-ui, sans-serif;
+  overflow-x: scroll;
   font-size: 14px;
 
   &__header {
@@ -25,7 +24,6 @@
       }
     }
   }
-
 
   &__rows {
     display: flex;
@@ -55,5 +53,34 @@
     &:last-child {
       border-right: none;
     }
+  }
+
+  &__row--skeleton {
+    pointer-events: none;
+    border: 0;
+
+    .data-grid__cell {
+      margin: 20px;
+      border-radius: 4px;
+      background: linear-gradient(
+                      90deg,
+                      #e6e6e6 25%,
+                      #f2f2f2 37%,
+                      #e6e6e6 63%
+      );
+      background-size: 400% 100%;
+      animation: skeleton-loading 10s linear infinite;
+      min-height: 32px;
+      color: transparent;
+    }
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -400% 0;
+  }
+  100% {
+    background-position: 400% 0;
   }
 }

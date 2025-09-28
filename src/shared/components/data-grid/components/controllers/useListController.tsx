@@ -17,6 +17,7 @@ export const useListController = <TData extends Record<string, unknown>>(
     sorting,
     onSortChange,
     sortingHash,
+    busy
   } = useSortingController(rows, columnsHash)
 
   return {
@@ -25,5 +26,6 @@ export const useListController = <TData extends Record<string, unknown>>(
     onSortChange,
     columns: columnsState,
     sortingHash,
+    loading: busy
   }
 }
