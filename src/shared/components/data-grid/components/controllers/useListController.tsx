@@ -9,7 +9,7 @@ import { useSortingController } from '@/shared/components/data-grid/components/c
 export const useListController = <TData extends Record<string, unknown>>(
   props: UseListControllerProps<TData>,
 ): DataGridProps<TData> => {
-  const { columns, rows } = props
+  const { columns, rows, initialSorting } = props
   const columnsState = useColumnsController(columns)
   const [_, _1, columnsHash] = columnsState
   const {
@@ -18,7 +18,7 @@ export const useListController = <TData extends Record<string, unknown>>(
     onSortChange,
     sortingHash,
     busy
-  } = useSortingController(rows, columnsHash)
+  } = useSortingController(rows, columnsHash, initialSorting)
 
   return {
     rows: sortedRows,

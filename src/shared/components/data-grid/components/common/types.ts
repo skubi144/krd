@@ -81,6 +81,7 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
   rows: Array<TData>
+  initialSorting?: Array<SortingDef<TData>>
 }
 
 export type HeaderProps<TData extends Record<string, unknown>> = {

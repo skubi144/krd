@@ -1,6 +1,7 @@
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import styles from './debtor-list.module.scss'
 import type { SubmitHandler } from 'react-hook-form'
 import { Input } from '@/shared/components/input/input.tsx'
@@ -23,6 +24,7 @@ export const DebtorView = () => {
   const listProps = useListController({
     columns,
     rows: search.phrase ? filteredDebts.data : topDebts.data,
+    initialSorting: search.sorting
   })
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: { phrase: search.phrase ?? '' },
@@ -30,6 +32,7 @@ export const DebtorView = () => {
   })
   const loading =
     listProps.loading || topDebts.isFetching || filteredDebts.isFetching
+
   const onSubmit: SubmitHandler<DebtorForm> = async (data) => {
     await navigate({ search: data })
   }
@@ -38,6 +41,10 @@ export const DebtorView = () => {
     await navigate({ search: {} })
     setValue('phrase', '')
   }
+
+  useEffect(() => {
+    navigate({ search: { sorting: listProps.sorting } })
+  }, [listProps.sorting])
 
   return (
     <>
