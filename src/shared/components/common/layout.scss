@@ -1,0 +1,23 @@
+@use "sass:map";
+
+$breakpoints: (
+        "mobile": 767px,
+        "desktop": 768px
+);
+
+// mixin
+@mixin device($device) {
+  $size: map-get($breakpoints, $device);
+
+  @if $size == null {
+    @warn "Please provide proper device";
+  } @else if $device == "mobile" {
+    @media (max-width: $size) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}

@@ -62,7 +62,8 @@ export const DebtorView = () => {
             render={({ field }) => (
               <Input
                 {...field}
-                label="Podaj NIP lub nazwę dłużnika"
+                placeholder={"Podaj NIP lub nazwę dłużnika"}
+                // label="Podaj NIP lub nazwę dłużnika"
                 suffix={
                   <>
                     <Button type="submit">Szukaj</Button>

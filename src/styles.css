@@ -62,6 +62,9 @@
     --font-size-heading: var(--font-size-3xl);
     --font-size-subheading: var(--font-size-xl);
     --font-size-caption: var(--font-size-sm);
+
+    --bp-mobile: 767px;
+    --bp-desktop: 768px;
 }
 
 * {

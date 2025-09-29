@@ -1,5 +1,18 @@
+@use "../../../shared/components/common/layout" as l;
+
 .filters {
-  padding: 5rem 3rem;
-  background-color: var(--color-primary);
-  color: var(--color-neutral-400);
+  @include l.device('desktop') {
+    padding: 5rem 3rem;
+    background-color: var(--color-primary);
+    color: var(--color-neutral-400);
+  }
+
+  @include l.device('mobile') {
+    position: fixed;
+    top: calc(100% - 17svh);
+    align-self: center;
+    background-color: rgba(#fff, 0.85);
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
 }

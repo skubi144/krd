@@ -5,10 +5,12 @@
 .input {
   padding: 1rem 1.5rem;
   border: none;
+  width: 100%;
 }
 
 .inputwrapper {
   background-color: #fff;
+  flex: 1;
 }
 
 .button {
