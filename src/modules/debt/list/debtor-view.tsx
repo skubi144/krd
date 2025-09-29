@@ -24,9 +24,9 @@ export const DebtorView = () => {
   const listProps = useListController({
     columns,
     rows: search.phrase ? filteredDebts.data : topDebts.data,
-    initialSorting: search.sorting
+    initialSorting: search.sorting,
   })
-  const { handleSubmit, control, setValue } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: { phrase: search.phrase ?? '' },
     resolver: zodResolver(debtorSearchSchema),
   })
@@ -38,8 +38,8 @@ export const DebtorView = () => {
   }
 
   const handleClear = async () => {
-    await navigate({ search: {} })
-    setValue('phrase', '')
+    await navigate({ search: { sorting: listProps.sorting } })
+    reset({ phrase: '' })
   }
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const DebtorView = () => {
   return (
     <>
       <div className={styles.filters}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} onReset={handleClear}>
           <Controller
             name="phrase"
             control={control}
@@ -57,9 +57,13 @@ export const DebtorView = () => {
             render={({ field }) => (
               <Input
                 {...field}
-                onClear={handleClear}
                 label="Podaj NIP lub nazwę dłużnika"
-                suffix={<Button type="submit">Szukaj</Button>}
+                suffix={
+                  <>
+                    <Button type="submit">Szukaj</Button>
+                    {search.phrase && <Button variant={'secondary'} type="reset">X</Button>}
+                  </>
+                }
               />
             )}
           />

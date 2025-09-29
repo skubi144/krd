@@ -21,6 +21,5 @@ export const sortingDebtorSchema = z.object({
         ]),
         order: z.enum(['asc', 'desc']),
       }),
-    )
-    .optional(),
+    ).optional(),
 })

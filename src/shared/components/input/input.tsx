@@ -8,11 +8,10 @@ interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'>,
     Omit<FieldProps, 'id'> {
   suffix?: ReactNode
-  onClear?: () => void
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ suffix, value, disabled, onClear, ...rest }, ref) => {
+  ({ suffix, value, disabled, ...rest }, ref) => {
     const id = useId()
 
     return (
@@ -27,14 +26,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               value={value}
               {...rest}
             />
-            <button
-              onClick={onClear}
-              type="button"
-              disabled={!value || disabled}
-              className={styles.button}
-            >
-              {value ? 'X' : ' '}
-            </button>
           </div>
           {suffix}
         </div>
