@@ -26,7 +26,12 @@ export const DebtorView = () => {
     rows: search.phrase ? filteredDebts.data : topDebts.data,
     initialSorting: search.sorting,
   })
-  const { handleSubmit, control, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: { phrase: search.phrase ?? '' },
     resolver: zodResolver(debtorSearchSchema),
   })
@@ -61,9 +66,14 @@ export const DebtorView = () => {
                 suffix={
                   <>
                     <Button type="submit">Szukaj</Button>
-                    {search.phrase && <Button variant={'secondary'} type="reset">X</Button>}
+                    {search.phrase && (
+                      <Button variant={'secondary'} type="reset">
+                        X
+                      </Button>
+                    )}
                   </>
                 }
+                error={errors.phrase && "Aby wyszukać, podaj co najmniej 3 znaki"}
               />
             )}
           />
