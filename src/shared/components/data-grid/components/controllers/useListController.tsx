@@ -26,6 +26,7 @@ export const useListController = <TData extends Record<string, unknown>>(
     onSortChange,
     columns: columnsState,
     sortingHash,
-    loading: busy
+    loading: busy,
+    view:'cards'
   }
 }

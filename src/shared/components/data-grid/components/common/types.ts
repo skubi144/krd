@@ -69,6 +69,7 @@ export type SortingControllerResult<T extends Record<string, unknown>> = {
   busy: boolean
 }
 
+export type DataGridView = 'data-grid' | 'cards'
 export type DataGridProps<TData extends Record<string, unknown>> = {
   columns: ColumnsControllerResult<TData>
   onSortChange?: OnSortChangeHandler<TData>
@@ -76,6 +77,7 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
   sorting?: Array<SortingDef<TData>>
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
   loading?: boolean
+  view?: DataGridView
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
