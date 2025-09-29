@@ -83,6 +83,9 @@ export const DebtorView = () => {
       <div>
         <DataGrid {...listProps} loading={loading} />
       </div>
+      <div>
+        <button className={styles.floating}>F</button>
+      </div>
     </>
   )
 }
