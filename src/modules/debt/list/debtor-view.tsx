@@ -56,40 +56,7 @@ export const DebtorView = () => {
   return (
     <>
       <div className={styles.filters}>
-        {/*<form onSubmit={handleSubmit(onSubmit)} onReset={handleClear}>*/}
-        {/*  <Controller*/}
-        {/*    name="phrase"*/}
-        {/*    control={control}*/}
-        {/*    defaultValue=""*/}
-        {/*    render={({ field }) => (*/}
-        {/*      <Input*/}
-        {/*        {...field}*/}
-        {/*        placeholder={'Podaj NIP lub nazwę dłużnika'}*/}
-        {/*        // label="Podaj NIP lub nazwę dłużnika"*/}
-        {/*        suffix={*/}
-        {/*          <>*/}
-        {/*            <Button type="submit">Szukaj</Button>*/}
-        {/*            {search.phrase && (*/}
-        {/*              <Button variant={'secondary'} type="reset">*/}
-        {/*                X*/}
-        {/*              </Button>*/}
-        {/*            )}*/}
-        {/*          </>*/}
-        {/*        }*/}
-        {/*        error={*/}
-        {/*          errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'*/}
-        {/*        }*/}
-        {/*      />*/}
-        {/*    )}*/}
-        {/*  />*/}
-        {/*</form>*/}
-      </div>
-      <div>
-        <DataGrid {...listProps} loading={loading} />
-      </div>
-      <div>
-        <BottomSheet>
-          <h4>Filtruj</h4>
+        <form onSubmit={handleSubmit(onSubmit)} onReset={handleClear}>
           <Controller
             name="phrase"
             control={control}
@@ -115,15 +82,48 @@ export const DebtorView = () => {
               />
             )}
           />
-          <h4>Sortuj</h4>
-          <Header
-            direction={'vertical'}
-            columns={listProps.columns}
-            sorting={listProps.sorting}
-            onSortChange={listProps.onSortChange}
-            sortingHash={listProps.sortingHash}
-          />
-        </BottomSheet>
+        </form>
+      </div>
+      <div>
+        <DataGrid {...listProps} loading={loading} />
+      </div>
+      <div>
+        {/*<BottomSheet>*/}
+        {/*  <h4>Filtruj</h4>*/}
+        {/*  <Controller*/}
+        {/*    name="phrase"*/}
+        {/*    control={control}*/}
+        {/*    defaultValue=""*/}
+        {/*    render={({ field }) => (*/}
+        {/*      <Input*/}
+        {/*        {...field}*/}
+        {/*        placeholder={'Podaj NIP lub nazwę dłużnika'}*/}
+        {/*        // label="Podaj NIP lub nazwę dłużnika"*/}
+        {/*        suffix={*/}
+        {/*          <>*/}
+        {/*            <Button type="submit">Szukaj</Button>*/}
+        {/*            {search.phrase && (*/}
+        {/*              <Button variant={'secondary'} type="reset">*/}
+        {/*                X*/}
+        {/*              </Button>*/}
+        {/*            )}*/}
+        {/*          </>*/}
+        {/*        }*/}
+        {/*        error={*/}
+        {/*          errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'*/}
+        {/*        }*/}
+        {/*      />*/}
+        {/*    )}*/}
+        {/*  />*/}
+        {/*  <h4>Sortuj</h4>*/}
+        {/*  <Header*/}
+        {/*    direction={'vertical'}*/}
+        {/*    columns={listProps.columns}*/}
+        {/*    sorting={listProps.sorting}*/}
+        {/*    onSortChange={listProps.onSortChange}*/}
+        {/*    sortingHash={listProps.sortingHash}*/}
+        {/*  />*/}
+        {/*</BottomSheet>*/}
       </div>
     </>
   )

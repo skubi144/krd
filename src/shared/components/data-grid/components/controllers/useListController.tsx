@@ -27,6 +27,6 @@ export const useListController = <TData extends Record<string, unknown>>(
     columns: columnsState,
     sortingHash,
     loading: busy,
-    view:'cards'
+    view:'data-grid'
   }
 }
