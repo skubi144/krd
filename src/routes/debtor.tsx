@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { DebtorView } from '@/modules/debt/list/debtor-view.tsx'
+import { DebtorView } from '@/modules/debt/view/debtor-view.tsx'
 import {
   debtorSearchSchema,
   sortingDebtorSchema,
-} from '@/modules/debt/list/schema.ts'
+} from '@/modules/debt/common/schema.ts'
 
 export const Route = createFileRoute('/debtor')({
   component: RouteComponent,
