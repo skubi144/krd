@@ -91,6 +91,7 @@ export type HeaderProps<TData extends Record<string, unknown>> = {
   onSortChange?: OnSortChangeHandler<TData>
   sorting?: Array<SortingDef<TData>>
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
+  direction?: 'horizontal' | 'vertical'
 }
 
 export type RowsProps<TData extends Record<string, unknown>> = {

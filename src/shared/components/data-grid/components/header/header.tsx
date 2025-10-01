@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import styles from '../common/data-grid.module.scss'
 import type { HeaderProps } from '@/shared/components/data-grid/components/common/types.ts'
 import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/common/utils.ts'
@@ -5,12 +6,20 @@ import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/
 export const Header = <T extends Record<string, unknown>>(
   props: HeaderProps<T>,
 ) => {
-  const { columns: columnsDef, sortingHash, onSortChange } = props
+  const {
+    columns: columnsDef,
+    sortingHash,
+    onSortChange,
+    direction = 'horizontal',
+  } = props
   const [columns] = columnsDef
 
   return (
     <div
-      className={styles['data-grid__header']}
+      className={clsx(
+        styles['data-grid__header'],
+        styles[`data-grid__header--${direction}`],
+      )}
       style={getGridColumnStyleDef(columns)}
     >
       {columns.map((column) => (

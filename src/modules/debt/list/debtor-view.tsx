@@ -11,7 +11,8 @@ import { useListController } from '@/shared/components/data-grid/components/cont
 import { useFilteredDebts, useTopDebts } from '@/shared/integrations/queries'
 import { useColumnsDef } from '@/modules/debt/list/useColumnsDef.ts'
 import { debtorSearchSchema } from '@/modules/debt/list/schema.ts'
-import { BottomSheet } from '@/shared/components/dialog/bottom-sheet.tsx'
+import { BottomSheet } from '@/shared/components/bottom-sheet/bottom-sheet.tsx'
+import { Header } from '@/shared/components/data-grid/components/header/header.tsx'
 
 interface DebtorForm {
   phrase?: string
@@ -88,6 +89,7 @@ export const DebtorView = () => {
       </div>
       <div>
         <BottomSheet>
+          <h4>Filtruj</h4>
           <Controller
             name="phrase"
             control={control}
@@ -112,6 +114,14 @@ export const DebtorView = () => {
                 }
               />
             )}
+          />
+          <h4>Sortuj</h4>
+          <Header
+            direction={'vertical'}
+            columns={listProps.columns}
+            sorting={listProps.sorting}
+            onSortChange={listProps.onSortChange}
+            sortingHash={listProps.sortingHash}
           />
         </BottomSheet>
       </div>
