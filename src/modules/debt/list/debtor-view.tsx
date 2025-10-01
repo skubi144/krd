@@ -11,6 +11,7 @@ import { useListController } from '@/shared/components/data-grid/components/cont
 import { useFilteredDebts, useTopDebts } from '@/shared/integrations/queries'
 import { useColumnsDef } from '@/modules/debt/list/useColumnsDef.ts'
 import { debtorSearchSchema } from '@/modules/debt/list/schema.ts'
+import { BottomSheet } from '@/shared/components/dialog/bottom-sheet.tsx'
 
 interface DebtorForm {
   phrase?: string
@@ -54,7 +55,39 @@ export const DebtorView = () => {
   return (
     <>
       <div className={styles.filters}>
-        <form onSubmit={handleSubmit(onSubmit)} onReset={handleClear}>
+        {/*<form onSubmit={handleSubmit(onSubmit)} onReset={handleClear}>*/}
+        {/*  <Controller*/}
+        {/*    name="phrase"*/}
+        {/*    control={control}*/}
+        {/*    defaultValue=""*/}
+        {/*    render={({ field }) => (*/}
+        {/*      <Input*/}
+        {/*        {...field}*/}
+        {/*        placeholder={'Podaj NIP lub nazwę dłużnika'}*/}
+        {/*        // label="Podaj NIP lub nazwę dłużnika"*/}
+        {/*        suffix={*/}
+        {/*          <>*/}
+        {/*            <Button type="submit">Szukaj</Button>*/}
+        {/*            {search.phrase && (*/}
+        {/*              <Button variant={'secondary'} type="reset">*/}
+        {/*                X*/}
+        {/*              </Button>*/}
+        {/*            )}*/}
+        {/*          </>*/}
+        {/*        }*/}
+        {/*        error={*/}
+        {/*          errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'*/}
+        {/*        }*/}
+        {/*      />*/}
+        {/*    )}*/}
+        {/*  />*/}
+        {/*</form>*/}
+      </div>
+      <div>
+        <DataGrid {...listProps} loading={loading} />
+      </div>
+      <div>
+        <BottomSheet>
           <Controller
             name="phrase"
             control={control}
@@ -62,7 +95,7 @@ export const DebtorView = () => {
             render={({ field }) => (
               <Input
                 {...field}
-                placeholder={"Podaj NIP lub nazwę dłużnika"}
+                placeholder={'Podaj NIP lub nazwę dłużnika'}
                 // label="Podaj NIP lub nazwę dłużnika"
                 suffix={
                   <>
@@ -74,17 +107,13 @@ export const DebtorView = () => {
                     )}
                   </>
                 }
-                error={errors.phrase && "Aby wyszukać, podaj co najmniej 3 znaki"}
+                error={
+                  errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'
+                }
               />
             )}
           />
-        </form>
-      </div>
-      <div>
-        <DataGrid {...listProps} loading={loading} />
-      </div>
-      <div>
-        <button className={styles.floating}>F</button>
+        </BottomSheet>
       </div>
     </>
   )
