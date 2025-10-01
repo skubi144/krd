@@ -84,7 +84,7 @@ export const DebtorView = () => {
           />
         </form>
       </div>
-      <div>
+      <div className={styles.data_grid}>
         <DataGrid {...listProps} loading={loading} />
       </div>
       <div>
