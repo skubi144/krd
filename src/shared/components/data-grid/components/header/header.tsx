@@ -1,4 +1,6 @@
 import clsx from 'clsx'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import styles from '../common/data-grid.module.scss'
 import type { AriaAttributes, KeyboardEvent, ReactElement } from 'react'
 import type {
@@ -7,8 +9,6 @@ import type {
   SortingOrder,
 } from '@/shared/components/data-grid/components/common/types.ts'
 import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/common/utils.ts'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
 const ariaSort: Record<string | SortingOrder, AriaAttributes['aria-sort']> = {
   asc: 'ascending',
@@ -30,7 +30,7 @@ export const Header = <T extends Record<string, unknown>>(
     direction = 'horizontal',
     sorting,
   } = props
-  const [columns] = columnsDef
+  const { columns } = columnsDef
 
   const handleKeydown =
     (columnId: ColumnDef<T>['id']) =>
@@ -67,7 +67,9 @@ export const Header = <T extends Record<string, unknown>>(
           >
             {column.label}
             {sortIcon[order ?? '']}
-            {sorting && sorting.length > 1 && index !==undefined && <sup>{index + 1}</sup>}
+            {sorting && sorting.length > 1 && index !== undefined && (
+              <sup>{index + 1}</sup>
+            )}
           </div>
         )
       })}

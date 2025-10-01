@@ -35,12 +35,10 @@ export type UseRowsControllerProps<T extends Record<string, unknown>> = {
   rows: Array<T>
 }
 
-export type ColumnsControllerResult<T extends Record<string, unknown>> =
-  readonly [
-    Array<ColumnDef<T>>,
-    Dispatch<SetStateAction<Array<ColumnDef<T>>>>,
-    Record<keyof T, ColumnDef<T>>,
-  ]
+export type ColumnsControllerResult<T extends Record<string, unknown>> = {
+  columns: Array<ColumnDef<T>>
+  columnsHash: Record<keyof T, ColumnDef<T>>
+}
 
 export type RowsControllerResult<T extends Record<string, unknown>> = readonly [
   Array<T>,

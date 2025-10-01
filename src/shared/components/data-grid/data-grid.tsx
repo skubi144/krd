@@ -3,7 +3,7 @@ import type { DataGridProps } from '@/shared/components/data-grid/components/com
 import { Header } from '@/shared/components/data-grid/components/header/header.tsx'
 import { Rows } from '@/shared/components/data-grid/components/rows/rows.tsx'
 import { RowsSkeleton } from '@/shared/components/data-grid/components/rows/rows-skeleton.tsx'
-import { Cards } from '@/shared/components/data-grid/components/cards.tsx'
+import { Cards } from '@/shared/components/data-grid/components/cards/cards.tsx'
 
 export const DataGrid = <
   TData extends Record<string, unknown> = Record<string, unknown>,

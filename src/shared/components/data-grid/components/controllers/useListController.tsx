@@ -10,7 +10,7 @@ export const useListController = <TData extends Record<string, unknown>>(
 ): DataGridProps<TData> => {
   const { columns, rows, initialSorting } = props
   const columnsState = useColumnsController(columns)
-  const [_, _1, columnsHash] = columnsState
+  const { columnsHash } = columnsState
   const {
     rows: sortedRows,
     sorting,

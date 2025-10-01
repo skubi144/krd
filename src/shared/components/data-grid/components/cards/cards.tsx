@@ -7,7 +7,7 @@ export const Cards = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
 ) => {
   const { rows, columns: columnsState } = props
-  const [columns] = columnsState
+  const { columns } = columnsState
 
   return (
     <div className={styles['data-grid__rows']}>
@@ -19,7 +19,9 @@ export const Cards = <T extends Record<string, unknown>>(
         >
           {columns.map((column) => (
             <>
-              <div className={styles['data-grid__header-cell']}>{column.label}</div>
+              <div className={styles['data-grid__header-cell']}>
+                {column.label}
+              </div>
               <Cell
                 key={column.id as Key}
                 columnId={column.id.toString()}

@@ -8,14 +8,20 @@ export const useColumnsController = <T extends Record<string, unknown>>(
   columnsDef: Array<ColumnDef<T>>,
 ): ColumnsControllerResult<T> => {
   const state = useState<Array<ColumnDef<T>>>(() => columnsDef)
-  const [columns, setColumns] = state
+  const [columns] = state
 
   return useMemo(() => {
     const entries = columnsDef.map(
       (columnDef) => [columnDef.id, columnDef] as const,
     )
-    const hash = Object.fromEntries(entries) as Record<keyof T, ColumnDef<T>>
+    const columnsHash = Object.fromEntries(entries) as Record<
+      keyof T,
+      ColumnDef<T>
+    >
 
-    return [columns, setColumns, hash] as const
+    return {
+      columns,
+      columnsHash,
+    }
   }, [columns])
 }

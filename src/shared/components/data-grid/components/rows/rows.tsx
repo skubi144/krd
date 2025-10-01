@@ -7,8 +7,8 @@ import { Cell } from '@/shared/components/data-grid/components/cell/cell.tsx'
 export const Rows = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
 ) => {
-  const { rows, columns: columnsState, } = props
-  const [columns] = columnsState
+  const { rows, columns: columnsState } = props
+  const { columns } = columnsState
 
   return (
     <div className={styles['data-grid__rows']}>
