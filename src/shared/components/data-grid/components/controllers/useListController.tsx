@@ -5,7 +5,6 @@ import type {
 import { useColumnsController } from '@/shared/components/data-grid/components/controllers/useColumnsController.tsx'
 import { useSortingController } from '@/shared/components/data-grid/components/controllers/useSortingController.tsx'
 
-
 export const useListController = <TData extends Record<string, unknown>>(
   props: UseListControllerProps<TData>,
 ): DataGridProps<TData> => {
@@ -17,7 +16,7 @@ export const useListController = <TData extends Record<string, unknown>>(
     sorting,
     onSortChange,
     sortingHash,
-    busy
+    busy,
   } = useSortingController(rows, columnsHash, initialSorting)
 
   return {
@@ -27,6 +26,6 @@ export const useListController = <TData extends Record<string, unknown>>(
     columns: columnsState,
     sortingHash,
     loading: busy,
-    view:'data-grid'
+    view: 'data-grid',
   }
 }
