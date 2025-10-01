@@ -1,24 +1,15 @@
 import clsx from 'clsx'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import styles from '../common/data-grid.module.scss'
-import type { AriaAttributes, KeyboardEvent, ReactElement } from 'react'
+import type { KeyboardEvent } from 'react'
 import type {
   ColumnDef,
   HeaderProps,
-  SortingOrder,
 } from '@/shared/components/data-grid/components/common/types.ts'
 import { getGridColumnStyleDef } from '@/shared/components/data-grid/components/common/utils.ts'
-
-const ariaSort: Record<string | SortingOrder, AriaAttributes['aria-sort']> = {
-  asc: 'ascending',
-  desc: 'descending',
-}
-
-const sortIcon: Record<string | SortingOrder, ReactElement> = {
-  asc: <FontAwesomeIcon icon={faCaretUp} />,
-  desc: <FontAwesomeIcon icon={faCaretDown} />,
-}
+import {
+  ariaSort,
+  sortIcon,
+} from '@/shared/components/data-grid/components/header/consts.tsx'
 
 export const Header = <T extends Record<string, unknown>>(
   props: HeaderProps<T>,
