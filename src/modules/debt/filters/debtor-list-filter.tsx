@@ -70,12 +70,19 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
     </form>
   )
 
+  const onToggleBottomSheet = (next: boolean) => {
+    if (!next && control.getFieldState('phrase').error) {
+      control._reset()
+    }
+    setBottomSheetOpen(next)
+  }
+
   return (
     <>
       {isMobile ? (
         <BottomSheet
           open={isBottomSheetOpen}
-          onOpenChange={setBottomSheetOpen}
+          onOpenChange={onToggleBottomSheet}
           pullBar={
             <div className={styles['pullBar']}>
               <Badge
@@ -88,16 +95,20 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
               >
                 <FontAwesomeIcon icon={faSort} />
               </Badge>
-              <Badge content={search.phrase} color={'blue'}>
+              <Badge content={search.phrase ? 1 : undefined} color={'blue'}>
                 <FontAwesomeIcon icon={faFilter} />
               </Badge>
             </div>
           }
         >
-          <h4>Filtruj</h4>
-          {form}
-          <h4>Sortuj</h4>
-          <Header direction={'vertical'} {...listProps} />
+          <div className={styles['section']}>
+            <h4>Filtruj</h4>
+            {form}
+          </div>
+          <div className={styles['section']}>
+            <h4>Sortuj</h4>
+            <Header direction={'vertical'} {...listProps} />
+          </div>
         </BottomSheet>
       ) : (
         form

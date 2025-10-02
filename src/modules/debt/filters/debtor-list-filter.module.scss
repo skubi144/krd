@@ -1,6 +1,10 @@
-.pullBar{
+.pullBar {
   display: flex;
-  gap:18px;
-  width:100%;
+  gap: 18px;
+  width: 100%;
   color: var(--color-primary);
+}
+
+.section {
+  margin: 32px 0;
 }

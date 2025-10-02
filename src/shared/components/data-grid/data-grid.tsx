@@ -13,7 +13,7 @@ export const DataGrid = <
   const { loading, view } = props
 
   if (loading) {
-    return <div>{view === 'cards' ? <RowsSkeleton /> : <RowsSkeleton />}</div>
+    return <RowsSkeleton />
   }
 
   return (
