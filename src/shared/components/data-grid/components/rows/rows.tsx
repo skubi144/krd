@@ -14,6 +14,7 @@ export const Rows = <T extends Record<string, unknown>>(
     <div className={styles['data-grid__rows']}>
       {rows.map((row) => (
         <div
+          role={'row'}
           key={row['Id'] as Key}
           className={styles['data-grid__row']}
           style={getGridColumnStyleDef(columns)}

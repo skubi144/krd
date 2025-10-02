@@ -49,6 +49,7 @@ export const Header = <T extends Record<string, unknown>>(
         const { order, index } = sortingHash?.[column.id] ?? {}
         return (
           <div
+            role="columnheader"
             aria-sort={ariaSort[order ?? ''] ?? 'none'}
             tabIndex={0}
             className={styles['data-grid__header-cell']}
