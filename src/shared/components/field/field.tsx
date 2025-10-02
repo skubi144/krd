@@ -13,7 +13,7 @@ export const Field: FC<PropsWithChildren<FieldProps>> = (props) => {
     <div className={styles.field}>
       {label && <label htmlFor={id}>{label}</label>}
       {children}
-      {error && <span>{error}</span>}
+      {error && <span className={styles['field__error']}>{error}</span>}
     </div>
   )
 }

@@ -1,0 +1,31 @@
+.badge {
+  position: relative;
+  display: inline-block;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -6px;
+    left: 90%;
+    padding: 0 6px;
+    font-size: 8px;
+    color:white;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &--red {
+      background: var(--color-red-500);
+    }
+
+    &--blue {
+      background: var(--color-primary-500);
+    }
+
+    &--green {
+      background: green;
+    }
+  }
+}

@@ -53,6 +53,7 @@ export const DebtorView = () => {
     <>
       <div className={styles.filters}>
         <DebtorListFilter
+          listProps={listProps}
           handleSubmit={handleSubmit}
           onClear={handleClear}
           onValid={onSubmit}
