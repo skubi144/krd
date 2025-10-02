@@ -74,6 +74,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
 
   return (
     <div
+      role={'dialog'}
       className={clsx(styles.bottomSheet, {
         [styles['bottomSheet--open']]: open,
       })}
