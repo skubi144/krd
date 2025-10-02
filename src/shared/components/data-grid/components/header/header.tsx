@@ -57,9 +57,11 @@ export const Header = <T extends Record<string, unknown>>(
             onClick={handleClick(column.id)}
           >
             {column.label}
-            {sortIcon[order ?? '']}
-            {sorting && sorting.length > 1 && index !== undefined && (
+            {sortIcon[order ?? 'none']}
+            {sorting && sorting.length > 1 && index !== undefined ? (
               <sup>{index + 1}</sup>
+            ) : (
+              <sup />
             )}
           </div>
         )

@@ -1,3 +1,5 @@
+@use "../../../common/layout" as l;
+
 $commonBorder: 1px solid var(--color-neutral-400);
 
 .data-grid {
@@ -11,6 +13,10 @@ $commonBorder: 1px solid var(--color-neutral-400);
     display: grid;
     border-bottom: $commonBorder;
 
+    @include l.device(mobile) {
+      border-bottom: transparent;
+    }
+
     &--vertical {
       display: flex;
       flex-direction: column;
@@ -18,13 +24,18 @@ $commonBorder: 1px solid var(--color-neutral-400);
     }
 
     &-cell {
-      padding: 12px 8px 8px 8px;
+      padding: 12px 8px 8px 12px;
       overflow: hidden;
       text-overflow: ellipsis;
       color: var(--color-neutral-400);
       font-size: var(--font-size-xs);
       font-weight: 500;
       cursor: pointer;
+
+      @include l.device(mobile) {
+        color: var(--color-primary-500);
+        font-size: var(--font-size-md);
+      }
     }
   }
 

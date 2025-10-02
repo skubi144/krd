@@ -14,4 +14,11 @@ export const ariaSort: Record<
 export const sortIcon: Record<string | SortingOrder, ReactElement> = {
   asc: <FontAwesomeIcon aria-hidden={'true'} icon={faCaretUp} />,
   desc: <FontAwesomeIcon aria-hidden={'true'} icon={faCaretDown} />,
+  none: (
+    <FontAwesomeIcon
+      aria-hidden={'true'}
+      icon={faCaretDown}
+      style={{ visibility: 'hidden' }}
+    />
+  ),
 }
