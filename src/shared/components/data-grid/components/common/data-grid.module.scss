@@ -1,6 +1,6 @@
 @use "../../../common/layout" as l;
 
-$commonBorder: 1px solid var(--color-neutral-400);
+$commonBorder: 1px solid var(--color-secondary-300);
 
 .data-grid {
   display: flex;
@@ -24,10 +24,10 @@ $commonBorder: 1px solid var(--color-neutral-400);
     }
 
     &-cell {
-      padding: 12px 8px 8px 12px;
+      padding: 8px 12px;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: var(--color-neutral-400);
+      color: var(--color-secondary-200);
       font-size: var(--font-size-xs);
       font-weight: 500;
       cursor: pointer;

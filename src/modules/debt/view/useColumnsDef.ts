@@ -24,13 +24,13 @@ const timeRenderer: ValueRenderer = (value) => {
 export const useColumnsDef = () => {
   return useMemo<Array<ColumnDef<Debt>>>(
     () => [
-      { id: 'Name', type: 'text', label: 'Dłużnik', width: '2fr' },
+      { id: 'Name', type: 'text', label: 'DŁUŻNIK', width: '2fr' },
       { id: 'NIP', type: 'text', label: 'NIP' },
-      { id: 'Value', type: 'text', label: 'Kwota zadłużenia', width: '2fr' },
+      { id: 'Value', type: 'number', label: 'KWOTA ZADŁUŻENIA', width: '2fr' },
       {
         id: 'Date',
         type: 'date',
-        label: 'Data powstania zobowiązania',
+        label: 'DATA POWSTANIA ZOBOWIĄZANIA',
         render: timeRenderer,
         width: '2fr',
       },

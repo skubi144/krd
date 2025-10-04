@@ -21,18 +21,28 @@ const defaultDateComparer: ColumnComparer = (a, b) => {
 }
 const defaultTextComparer: ColumnComparer = (a, b) =>
   String(a).localeCompare(String(b))
-const defaultComparer: ColumnComparer = () => 0
 
-// TODO Try change me to map or smth - avoid unnecessary execution context
-const defaultCompare = (type: ColumnType): ColumnComparer => {
-  switch (type) {
-    case 'date':
-      return defaultDateComparer
-    case 'text':
-      return defaultTextComparer
-    default:
-      return defaultComparer
+const defaultNumberComparer: ColumnComparer = (a, b) => {
+  const numA = Number(a)
+  const numB = Number(b)
+
+  const isValidA = !isNaN(numA)
+  const isValidB = !isNaN(numB)
+
+  if (isValidA && isValidB) {
+    return numA - numB
   }
+
+  if (isValidA) return -1
+  if (isValidB) return 1
+
+  return 0
+}
+
+export const defaultCompare: Record<ColumnType, ColumnComparer> = {
+  date: defaultDateComparer,
+  text: defaultTextComparer,
+  number: defaultNumberComparer,
 }
 
 export const sortRows = <T extends Record<string, unknown>>(
@@ -45,7 +55,7 @@ export const sortRows = <T extends Record<string, unknown>>(
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const getCompare = <K extends keyof T>(
     col: ColumnDef<T>,
-  ): ((a: T[K], b: T[K]) => number) => col.compare ?? defaultCompare(col.type)
+  ): ((a: T[K], b: T[K]) => number) => col.compare ?? defaultCompare[col.type]
 
   return [...rowsDef].sort((a, b) => {
     for (const { id, order } of sortingModelDef) {

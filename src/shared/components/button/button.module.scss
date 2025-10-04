@@ -1,5 +1,5 @@
 .button {
-  padding: 1rem 1.5rem;
+  padding: 1rem 3rem;
   cursor: pointer;
   border: none;
 }
@@ -7,4 +7,5 @@
 .primary {
   color: #fff;
   background-color: var(--color-red-500);
+  font-weight: 500;
 }

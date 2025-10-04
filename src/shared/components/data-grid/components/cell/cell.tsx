@@ -30,6 +30,12 @@ export const Cell = <T extends Record<string, unknown>>(
           {value as string}
         </div>
       )
+    case 'number':
+      return (
+        <div role={'cell'} className={styles['data-grid__cell']}>
+          {value as number}
+        </div>
+      )
     default:
       return ''
   }

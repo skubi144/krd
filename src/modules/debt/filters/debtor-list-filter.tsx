@@ -49,22 +49,24 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
         control={control}
         defaultValue=""
         render={({ field }) => (
-          <Input
-            {...field}
-            placeholder={isMobile ? inputText : ''}
-            label={isMobile ? '' : inputText}
-            suffix={
-              <>
-                <Button type="submit">Szukaj</Button>
-                {search.phrase && (
-                  <Button variant={'secondary'} type="reset">
-                    X
-                  </Button>
-                )}
-              </>
-            }
-            error={errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'}
-          />
+          <div className={styles.input}>
+            <Input
+              {...field}
+              placeholder={isMobile ? inputText : ''}
+              label={isMobile ? '' : inputText}
+              suffix={
+                <>
+                  <Button type="submit">SZUKAJ</Button>
+                  {search.phrase && (
+                    <Button variant={'secondary'} type="reset">
+                      X
+                    </Button>
+                  )}
+                </>
+              }
+              error={errors.phrase && 'Aby wyszukać, podaj co najmniej 3 znaki'}
+            />
+          </div>
         )}
       />
     </form>

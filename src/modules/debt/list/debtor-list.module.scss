@@ -2,7 +2,7 @@
 
 .filters {
   @include l.device('desktop') {
-    padding: 5rem 3rem;
+    padding: 64px 128px ;
     background-color: var(--color-primary);
     color: var(--color-neutral-400);
   }

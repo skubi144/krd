@@ -21,9 +21,16 @@ export interface DateColumnDef<T extends Record<string, unknown>>
   compare?: ColumnComparer
 }
 
+export interface NumberColumnDef<T extends Record<string, unknown>>
+  extends CommonColumnDef<T> {
+  type: 'number'
+  compare?: ColumnComparer
+}
+
 export type ColumnDef<T extends Record<string, unknown>> =
   | TextColumnDef<T>
   | DateColumnDef<T>
+  | NumberColumnDef<T>
 
 export type ColumnType = ColumnDef<Record<string, unknown>>['type']
 
