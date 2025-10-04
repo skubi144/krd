@@ -11,6 +11,8 @@ import { useColumnsDef } from '@/modules/debt/view/useColumnsDef.ts'
 import { debtorSearchSchema } from '@/modules/debt/common/schema.ts'
 import { DebtorListFilter } from '@/modules/debt/filters/debtor-list-filter.tsx'
 import { DataGrid } from '@/shared/components/data-grid/data-grid.tsx'
+import { BottomSheetSpacer } from '@/shared/components/bottom-sheet/bottom-sheet-spacer.tsx'
+import { useIsMobile } from '@/shared/utils/useIsMobile.ts'
 
 export const DebtorView = () => {
   const navigate = useNavigate({ from: '/debtor' })
@@ -32,6 +34,7 @@ export const DebtorView = () => {
     defaultValues: { phrase: search.phrase ?? '' },
     resolver: zodResolver(debtorSearchSchema),
   })
+  const isMobile = useIsMobile()
 
   const loading =
     listProps.loading || topDebts.isFetching || filteredDebts.isFetching
@@ -50,7 +53,7 @@ export const DebtorView = () => {
   }, [listProps.sorting])
 
   return (
-    <>
+    <BottomSheetSpacer isMobile={isMobile}>
       <div className={styles.filters}>
         <DebtorListFilter
           listProps={listProps}
@@ -64,6 +67,6 @@ export const DebtorView = () => {
       <div className={styles.data_grid}>
         <DataGrid {...listProps} loading={loading} />
       </div>
-    </>
+    </BottomSheetSpacer>
   )
 }

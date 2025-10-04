@@ -1,3 +1,5 @@
+$black: rgba(0, 0, 0, 0.15);
+
 .bottomSheet {
   position: fixed;
   inset: 0;
@@ -9,7 +11,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: $black;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -27,6 +29,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    filter: drop-shadow(0 -4px 12px $black);
   }
 
   &__header {
@@ -42,7 +45,7 @@
   &__handle {
     width: 3rem;
     height: 0.5rem;
-    background-color: #888;
+    background-color: var(--color-secondary-500);
     border-radius: 9999px;
     margin-bottom: 0.75rem;
   }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import styles from './bottom-sheet.module.scss'
 import type { FC, ReactNode } from 'react'
+import { VISIBLE_WHEN_CLOSED } from '@/shared/components/bottom-sheet/common.ts'
 
 type BottomSheetProps = {
   open: boolean
@@ -9,8 +10,6 @@ type BottomSheetProps = {
   children: ReactNode
   pullBar?: ReactNode
 }
-
-const VISIBLE_WHEN_CLOSED = 60
 
 export const BottomSheet: FC<BottomSheetProps> = ({
   open,
