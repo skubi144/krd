@@ -51,6 +51,7 @@ export const Header = <T extends Record<string, unknown>>(
         return (
           <div
             role="columnheader"
+            aria-label={`Column ${column.label}, click to sort rows`}
             aria-sort={ariaSort[order ?? ''] ?? 'none'}
             tabIndex={0}
             className={styles['data-grid__header-cell']}
@@ -61,9 +62,13 @@ export const Header = <T extends Record<string, unknown>>(
             {column.label}
             {sortIcon[order ?? 'none']}
             {sorting && sorting.length > 1 && index !== undefined ? (
-              <sup>{index + 1}</sup>
+              <sup
+                aria-label={`Column ${column.label}, sorting priority ${index + 1}`}
+              >
+                {index + 1}
+              </sup>
             ) : (
-              <sup />
+              <sup aria-hidden={true} />
             )}
           </div>
         )
