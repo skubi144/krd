@@ -35,6 +35,7 @@ interface DebtorListFilterParams {
   onClear: () => void
   onValid: SubmitHandler<DebtorForm>
 }
+
 export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
   const { handleSubmit, onValid, onClear, control, errors, listProps } = props
   const search = useSearch({ from: '/debtor' })
@@ -53,18 +54,18 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
         control={control}
         defaultValue=""
         render={({ field }) => (
-          <div className={styles.input}>
+          <div className={styles['debtor-list-filter__input']}>
             <Input
               {...field}
               placeholder={isMobile ? inputText : ''}
               label={isMobile ? '' : inputText}
               suffix={
                 <>
-                  <Button title={'Przeszukaj bazę dłużników'} type="submit">
+                  <Button title="Przeszukaj bazę dłużników" type="submit">
                     SZUKAJ
                   </Button>
                   {search.phrase && (
-                    <Button variant={'secondary'} type="reset" title={'Wyczyść filtry'}>
+                    <Button variant="secondary" type="reset" title="Wyczyść filtry">
                       <FontAwesomeIcon icon={faXmark} />
                     </Button>
                   )}
@@ -92,30 +93,30 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
           open={isBottomSheetOpen}
           onOpenChange={onToggleBottomSheet}
           pullBar={
-            <div className={styles['pullBar']}>
+            <div className={styles['debtor-list-filter__pull-bar']}>
               <Badge
                 content={
                   listProps.sorting?.length
                     ? listProps.sorting.length
                     : undefined
                 }
-                color={'blue'}
+                color="blue"
               >
                 <FontAwesomeIcon icon={faSort} />
               </Badge>
-              <Badge content={search.phrase ? 1 : undefined} color={'blue'}>
+              <Badge content={search.phrase ? 1 : undefined} color="blue">
                 <FontAwesomeIcon icon={faFilter} />
               </Badge>
             </div>
           }
         >
-          <div className={styles['section']}>
+          <div className={styles['debtor-list-filter__section']}>
             <h4>Filtruj</h4>
             {form}
           </div>
-          <div className={styles['section']}>
+          <div className={styles['debtor-list-filter__section']}>
             <h4>Sortuj</h4>
-            <Header direction={'vertical'} {...listProps} />
+            <Header direction="vertical" {...listProps} />
           </div>
         </BottomSheet>
       ) : (

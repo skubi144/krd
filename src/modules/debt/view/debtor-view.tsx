@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
-import styles from '../list/debtor-list.module.scss'
+import styles from './debtor-view.module.scss'
 import type { SubmitHandler } from 'react-hook-form'
 import type { DebtorForm } from '@/modules/debt/common/types.ts'
 import { useListController } from '@/shared/components/data-grid/components/controllers/useListController.tsx'
@@ -54,7 +54,7 @@ export const DebtorView = () => {
 
   return (
     <BottomSheetSpacer isMobile={isMobile}>
-      <div className={styles.filters}>
+      <div className={styles['debtor-view__filters']}>
         <DebtorListFilter
           listProps={listProps}
           handleSubmit={handleSubmit}
@@ -64,9 +64,10 @@ export const DebtorView = () => {
           errors={errors}
         />
       </div>
-      <div className={styles.data_grid}>
+      <div className={styles['debtor-view__data-grid']}>
         <DataGrid {...listProps} loading={loading} />
       </div>
     </BottomSheetSpacer>
   )
+
 }

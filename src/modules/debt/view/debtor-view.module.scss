@@ -1,0 +1,19 @@
+@use "../../../shared/components/common/layout" as l;
+
+.debtor-view {
+  &__filters {
+    @include l.device('desktop') {
+      padding: 4rem 8rem;
+      background-color: var(--color-primary);
+      color: var(--color-neutral-400);
+    }
+  }
+
+  &__data-grid {
+    padding: 1rem 8rem;
+
+    @include l.device('mobile') {
+      padding: 2rem 1rem;
+    }
+  }
+}
