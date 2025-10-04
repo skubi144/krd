@@ -1,9 +1,10 @@
-import { Fragment  } from 'react'
-import type {Key} from 'react';
+import { Fragment } from 'react'
+import type { Key } from 'react'
 import type { RowsProps } from '@/shared/components/data-grid/components/common/types.ts'
 import styles from '@/shared/components/data-grid/components/common/data-grid.module.scss'
 import { Cell } from '@/shared/components/data-grid/components/cell/cell.tsx'
 
+const style = { gridTemplateColumns: '1fr 1fr' }
 export const Cards = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
 ) => {
@@ -16,10 +17,10 @@ export const Cards = <T extends Record<string, unknown>>(
         <div
           key={row['Id'] as Key}
           className={styles['data-grid__row']}
-          style={{ gridTemplateColumns: '1fr 1fr' }}
+          style={style}
         >
           {columns.map((column) => (
-            <Fragment key={column.id as Key} >
+            <Fragment key={column.id as Key}>
               <div className={styles['data-grid__header-cell']}>
                 {column.label}
               </div>
