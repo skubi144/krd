@@ -5,20 +5,36 @@ import type {
   SortingDef,
 } from '@/shared/components/data-grid/components/common/types.ts'
 
-const defaultDateComparer: ColumnComparer = (a, b) => {
-  // Maybe timestamp
-  if (typeof a === 'number' && typeof b === 'number') {
-    return a - b
+const toEpochMs = (v: unknown): number | null => {
+  if (v instanceof Date) {
+    const t = v.getTime()
+    return Number.isFinite(t) ? t : null
   }
-  // Maybe date
-  if (a instanceof Date && b instanceof Date) {
-    return a.getTime() - b.getTime()
+
+  switch (typeof v) {
+    case 'number':
+      return Number.isFinite(v) ? v : null
+
+    case 'string': {
+      const parsed = Date.parse(v)
+      return Number.isFinite(parsed) ? parsed : null
+    }
+
+    default:
+      return null
   }
-  // Maybe ISO
-  const ta = Date.parse(String(a))
-  const tb = Date.parse(String(b))
-  return ta - tb
 }
+
+const defaultDateComparer: ColumnComparer = (a, b) => {
+  const ta = toEpochMs(a)
+  const tb = toEpochMs(b)
+
+  if (ta !== null && tb !== null) return ta - tb
+  if (ta !== null) return -1
+  if (tb !== null) return 1
+  return 0
+}
+
 const defaultTextComparer: ColumnComparer = (a, b) =>
   String(a).localeCompare(String(b))
 
@@ -45,6 +61,30 @@ export const defaultCompare: Record<ColumnType, ColumnComparer> = {
   number: defaultNumberComparer,
 }
 
+const buildComparator = <T extends Record<string, unknown>>(
+  sortingModelDef: Array<SortingDef<T>>,
+  columnsHash: Record<keyof T, ColumnDef<T>>,
+) => {
+  const comparators = sortingModelDef.map(({ id, order }) => {
+    const col = columnsHash[id]
+    const cmp = col.compare ?? defaultCompare[col.type]
+    const factor = order === 'asc' ? 1 : -1
+
+    return (a: T, b: T) => {
+      const result = cmp(a[id], b[id])
+      return factor * result
+    }
+  })
+
+  return (a: T, b: T) => {
+    for (const cmp of comparators) {
+      const result = cmp(a, b)
+      if (result !== 0) return result
+    }
+    return 0
+  }
+}
+
 export const sortRows = <T extends Record<string, unknown>>(
   rowsDef: Array<T>,
   columnsHash: Record<keyof T, ColumnDef<T>>,
@@ -52,21 +92,9 @@ export const sortRows = <T extends Record<string, unknown>>(
 ) => {
   if (!sortingModelDef.length) return rowsDef
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  const getCompare = <K extends keyof T>(
-    col: ColumnDef<T>,
-  ): ((a: T[K], b: T[K]) => number) => col.compare ?? defaultCompare[col.type]
+  const comparator = buildComparator(sortingModelDef, columnsHash)
 
-  return [...rowsDef].sort((a, b) => {
-    for (const { id, order } of sortingModelDef) {
-      const col = columnsHash[id]
-      const cmp = getCompare(col)(a[id], b[id])
-      if (cmp !== 0) {
-        return order === 'asc' ? cmp : -cmp
-      }
-    }
-    return 0
-  })
+  return [...rowsDef].sort(comparator)
 }
 
 export const changeSortingModel = <T extends Record<string, unknown>>(
