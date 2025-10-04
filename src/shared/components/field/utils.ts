@@ -1,0 +1,1 @@
+export const errorIdGenerator = (id: string) => `${id}-error`
