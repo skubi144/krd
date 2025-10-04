@@ -22,7 +22,7 @@ export const DebtorView = () => {
   const columns = useColumnsDef()
   const listProps = useListController({
     columns,
-    rows: search.phrase ? filteredDebts.data : topDebts.data,
+    rows: search.phrase ? (filteredDebts.data ?? []) : (topDebts.data ?? []),
     initialSorting: search.sorting,
   })
   const {
