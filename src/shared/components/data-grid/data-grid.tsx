@@ -10,10 +10,26 @@ export const DataGrid = <
 >(
   props: DataGridProps<TData>,
 ) => {
-  const { loading, view } = props
+  const {
+    loading,
+    view,
+    EmptyComponent = (
+      <div className={styles['data-grid__row--empty']}>Brak Danych</div>
+    ),
+    rows,
+  } = props
 
   if (loading) {
     return <RowsSkeleton />
+  }
+
+  if (rows.length === 0 && EmptyComponent) {
+    return (
+      <div className={styles['data-grid']}>
+        {view === 'data-grid' && <Header {...props} />}
+        {EmptyComponent}
+      </div>
+    )
   }
 
   return (

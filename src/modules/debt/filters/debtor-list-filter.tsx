@@ -16,7 +16,7 @@ import type {
   UseFormHandleSubmit,
 } from 'react-hook-form'
 import type { DebtorForm } from '@/modules/debt/common/types.ts'
-import type { DataGridProps } from '@/shared/components/data-grid/components/common/types.ts'
+import type { UseListControllerResult } from '@/shared/components/data-grid/components/common/types.ts'
 import type { Debt } from '@/shared/integrations/models'
 import { Button } from '@/shared/components/button/button.tsx'
 import { useIsMobile } from '@/shared/utils/useIsMobile.ts'
@@ -31,7 +31,7 @@ interface DebtorListFilterParams {
   control: Control<DebtorForm>
   errors: FieldErrors<DebtorForm>
   handleSubmit: UseFormHandleSubmit<DebtorForm>
-  listProps: DataGridProps<Debt>
+  listProps: UseListControllerResult<Debt>
   onClear: () => void
   onValid: SubmitHandler<DebtorForm>
 }

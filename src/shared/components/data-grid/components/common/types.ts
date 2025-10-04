@@ -75,7 +75,7 @@ export type SortingControllerResult<T extends Record<string, unknown>> = {
 }
 
 export type DataGridView = 'data-grid' | 'cards'
-export type DataGridProps<TData extends Record<string, unknown>> = {
+export type UseListControllerResult<TData extends Record<string, unknown>> = {
   columns: ColumnsControllerResult<TData>
   onSortChange?: OnSortChangeHandler<TData>
   rows: Array<TData>
@@ -83,6 +83,11 @@ export type DataGridProps<TData extends Record<string, unknown>> = {
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
   loading?: boolean
   view?: DataGridView
+}
+export interface DataGridProps<
+  TData extends Record<string, unknown>,
+> extends UseListControllerResult<TData> {
+  EmptyComponent?: ReactNode
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
