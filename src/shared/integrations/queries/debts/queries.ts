@@ -7,7 +7,7 @@ export const topDebtsQuery = () => ({
     fetchApi<Array<Debt>, undefined>({
       url: '/api/Recruitment/GetTopDebts',
     }),
-  initialData: [],
+  placeholderData: [],
 })
 
 export const filteredDebtsQuery = (phrase?: string) => ({
@@ -19,5 +19,5 @@ export const filteredDebtsQuery = (phrase?: string) => ({
       body: { phrase },
     }),
   enabled: !!phrase,
-  initialData: [],
+  placeholderData: [],
 })
