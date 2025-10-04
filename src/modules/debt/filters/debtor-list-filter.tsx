@@ -25,7 +25,7 @@ import { Input } from '@/shared/components/input/input.tsx'
 import { Header } from '@/shared/components/data-grid/components/header/header.tsx'
 import { Badge } from '@/shared/components/badge/badge.tsx'
 
-const inputText = 'Podaj NIP lub nazwę dłużnika'
+const inputText = 'PODAJ NIP LUB NAZWĘ DŁUŻNIKA'
 
 interface DebtorListFilterParams {
   control: Control<DebtorForm>

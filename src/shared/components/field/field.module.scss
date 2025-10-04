@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 0.2rem;
 
+  &__label{
+    font-weight: 600;
+    line-height: 2.5rem;
+  }
+
   &__error {
     color: var(--color-red-500);
     font-size: var(--font-size-xs);
