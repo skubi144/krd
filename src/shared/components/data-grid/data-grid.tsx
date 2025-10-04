@@ -24,19 +24,14 @@ export const DataGrid = <
     rows,
   } = props
 
-  if (loading) {
-    return (
-      <DataGridWrapper>
-        <RowsSkeleton />
-      </DataGridWrapper>
-    )
-  }
-
   if (rows.length === 0 && EmptyComponent) {
     return (
       <DataGridWrapper>
         {view === 'data-grid' && <Header {...props} />}
         {EmptyComponent}
+        <div role="status" aria-live="polite" className="sr-only">
+          Brak danych
+        </div>
       </DataGridWrapper>
     )
   }
@@ -48,7 +43,16 @@ export const DataGrid = <
       ) : (
         <>
           <Header {...props} />
-          <Rows {...props} />
+          {loading ? (
+            <>
+              <RowsSkeleton />
+              <div role="status" aria-live="polite" className="sr-only">
+                Ładowanie danych
+              </div>
+            </>
+          ) : (
+            <Rows {...props} />
+          )}
         </>
       )}
     </DataGridWrapper>
