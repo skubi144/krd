@@ -24,7 +24,7 @@ export const DataGrid = <
     rows,
   } = props
 
-  if (rows.length === 0 && EmptyComponent) {
+  if (rows.length === 0 && !loading && EmptyComponent) {
     return (
       <DataGridWrapper>
         {view === 'data-grid' && <Header {...props} />}
