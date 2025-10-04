@@ -1,9 +1,14 @@
 import styles from './components/common/data-grid.module.scss'
 import type { DataGridProps } from '@/shared/components/data-grid/components/common/types.ts'
+import type { FC, PropsWithChildren } from 'react'
 import { Header } from '@/shared/components/data-grid/components/header/header.tsx'
 import { Rows } from '@/shared/components/data-grid/components/rows/rows.tsx'
 import { RowsSkeleton } from '@/shared/components/data-grid/components/rows/rows-skeleton.tsx'
 import { Cards } from '@/shared/components/data-grid/components/cards/cards.tsx'
+
+const DataGridWrapper: FC<PropsWithChildren> = ({ children }) => (
+  <div className={styles['data-grid']}>{children}</div>
+)
 
 export const DataGrid = <
   TData extends Record<string, unknown> = Record<string, unknown>,
@@ -20,20 +25,24 @@ export const DataGrid = <
   } = props
 
   if (loading) {
-    return <RowsSkeleton />
+    return (
+      <DataGridWrapper>
+        <RowsSkeleton />
+      </DataGridWrapper>
+    )
   }
 
   if (rows.length === 0 && EmptyComponent) {
     return (
-      <div className={styles['data-grid']}>
+      <DataGridWrapper>
         {view === 'data-grid' && <Header {...props} />}
         {EmptyComponent}
-      </div>
+      </DataGridWrapper>
     )
   }
 
   return (
-    <div className={styles['data-grid']}>
+    <DataGridWrapper>
       {view === 'cards' ? (
         <Cards {...props} />
       ) : (
@@ -42,6 +51,6 @@ export const DataGrid = <
           <Rows {...props} />
         </>
       )}
-    </div>
+    </DataGridWrapper>
   )
 }
