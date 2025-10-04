@@ -19,7 +19,6 @@ export const Route = createFileRoute('/debtor')({
       })
     }
   },
-  errorComponent: () => <>Something went wrong</>,
 })
 
 function RouteComponent() {

@@ -4,6 +4,7 @@ import { TanstackDevtools } from '@tanstack/react-devtools'
 
 import type { QueryClient } from '@tanstack/react-query'
 import TanStackQueryDevtools from '@/shared/integrations/tanstack-query/devtools'
+import { ErrorPage } from '@/shared/pages/error-page/error-page.tsx'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -27,4 +28,5 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       />
     </>
   ),
+  errorComponent: () => <ErrorPage />,
 })
