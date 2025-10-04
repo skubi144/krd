@@ -16,20 +16,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <Field id={id} {...rest}>
-        <div className={styles.wrapper}>
-          <div className={styles.inputwrapper}>
+        <div className={styles.input}>
+          <div className={styles.input__field}>
             <input
               id={id}
               ref={ref}
-              className={styles.input}
+              className={styles.input__control}
               disabled={disabled}
               value={value}
               {...rest}
             />
           </div>
-          {suffix}
+          {suffix && <div className={styles.input__suffix}>{suffix}</div>}
         </div>
       </Field>
     )
-  },
+  }
 )

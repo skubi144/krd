@@ -1,21 +1,24 @@
-.wrapper {
-  display: flex;
-}
-
 .input {
-  padding: 1rem 1.5rem;
-  border: none;
-  width: 100%;
-}
+  display: flex;
 
-.inputwrapper {
-  background-color: #fff;
-  flex: 1;
-}
+  &__field {
+    flex: 1;
+    background-color: #fff;
+  }
 
-.button {
-  border: none;
-  background-color: transparent;
-  padding: 8px;
-  min-width:32px;
+  &__control {
+    width: 100%;
+    border: none;
+    padding: 1rem 1.5rem;
+  }
+
+  &__suffix {
+  }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem;
+    min-width: 2rem;
+  }
 }
