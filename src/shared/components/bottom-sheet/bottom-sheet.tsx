@@ -73,6 +73,9 @@ export const BottomSheet: FC<BottomSheetProps> = ({
 
   return (
     <div
+      aria-hidden={open}
+      aria-label={"Bottom sheet"}
+      aria-modal={'true'}
       role={'dialog'}
       className={clsx(styles.bottomSheet, {
         [styles['bottomSheet--open']]: open,
