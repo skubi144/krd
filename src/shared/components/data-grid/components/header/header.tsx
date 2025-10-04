@@ -31,6 +31,7 @@ export const Header = <T extends Record<string, unknown>>(
       event.preventDefault()
       event.stopPropagation()
       onSortChange?.(columnId)
+      event.currentTarget.focus()
     }
 
   const handleClick = (columnId: ColumnDef<T>['id']) => () => {

@@ -32,6 +32,10 @@ $commonBorder: 1px solid var(--color-secondary-300);
       font-weight: 500;
       cursor: pointer;
 
+      @at-root .data-grid__header--vertical & {
+        max-width: fit-content;
+      }
+
       @include l.device(mobile) {
         color: var(--color-primary-500);
         font-size: var(--font-size-md);

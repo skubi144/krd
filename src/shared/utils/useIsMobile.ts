@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const MOBILE_MAX = 767
+const MOBILE_MAX = 1024
 
 const getIsMobile = () => window.innerWidth <= MOBILE_MAX
 

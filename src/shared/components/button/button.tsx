@@ -8,12 +8,24 @@ interface ButtonProps {
   type?: HTMLButtonElement['type']
   onClick?: () => void
   variant?: ButtonVariant
+  title?: string
 }
 export const Button: FC<PropsWithChildren<ButtonProps>> = (props) => {
-  const { type = 'button', onClick, variant = 'primary', children } = props;
+  const {
+    title,
+    type = 'button',
+    onClick,
+    variant = 'primary',
+    children,
+  } = props
 
   return (
-    <button className={clsx(styles.button, styles[variant])} type={type} onClick={onClick}>
+    <button
+      title={title}
+      className={clsx(styles.button, styles[variant])}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   )

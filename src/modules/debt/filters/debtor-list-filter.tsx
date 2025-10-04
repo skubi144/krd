@@ -2,7 +2,11 @@ import { Controller } from 'react-hook-form'
 import { useSearch } from '@tanstack/react-router'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
+import {
+  faFilter,
+  faSort,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import styles from './debtor-list-filter.module.scss'
 import type { FC } from 'react'
 import type {
@@ -56,10 +60,12 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
               label={isMobile ? '' : inputText}
               suffix={
                 <>
-                  <Button type="submit">SZUKAJ</Button>
+                  <Button title={'Przeszukaj bazę dłużników'} type="submit">
+                    SZUKAJ
+                  </Button>
                   {search.phrase && (
                     <Button variant={'secondary'} type="reset">
-                      X
+                      <FontAwesomeIcon icon={faXmark} />
                     </Button>
                   )}
                 </>
