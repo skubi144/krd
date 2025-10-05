@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { Field } from '@/shared/components/field/field.tsx'
 
-describe('Field', () => {
+describe('Field tests', () => {
   it('renders label correctly associated with input', () => {
     const name = 'email'
     render(

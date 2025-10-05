@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from './button'
 
-describe('Button component', () => {
+describe('Button tests', () => {
   it('renders with given children as label', () => {
     const label = 'Click me'
     render(<Button>{label}</Button>)

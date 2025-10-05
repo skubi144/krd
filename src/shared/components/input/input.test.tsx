@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { Input } from './input'
 
-describe('Input component', () => {
+describe('Input tests', () => {
   it('renders a label connected to the input', () => {
     const label = 'Username'
     render(<Input label={label} />)
