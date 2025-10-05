@@ -44,7 +44,7 @@ export type UseRowsControllerProps<T extends Record<string, unknown>> = {
 
 export type ColumnsControllerResult<T extends Record<string, unknown>> = {
   columns: Array<ColumnDef<T>>
-  columnsHash: Record<keyof T, ColumnDef<T>>
+  columnsHash: Partial<Record<keyof T, ColumnDef<T>>>
 }
 
 export type RowsControllerResult<T extends Record<string, unknown>> = readonly [

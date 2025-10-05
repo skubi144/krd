@@ -13,7 +13,7 @@ import {
 
 export const useSortingController = <T extends Record<string, unknown>>(
   rowsDef: Array<T>,
-  columnsHash: Record<keyof T, ColumnDef<T>>,
+  columnsHash: Partial<Record<keyof T, ColumnDef<T>>>,
   initialSortingModelDef: Array<SortingDef<T>> = [],
 ): SortingControllerResult<T> => {
   const [sortedRows, setSortedRows] = useState<Array<T>>(() => rowsDef)

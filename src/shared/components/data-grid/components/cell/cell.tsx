@@ -16,6 +16,8 @@ export const Cell = <T extends Record<string, unknown>>(
   const { columnsHash } = columns
   const columnDef = columnsHash[columnId]
 
+  if (!columnDef) return <CellRenderer></CellRenderer>
+
   if (columnDef.render) {
     return <CellRenderer>{columnDef.render(value)}</CellRenderer>
   }

@@ -63,10 +63,11 @@ export const defaultCompare: Record<ColumnType, ColumnComparer> = {
 
 const buildComparator = <T extends Record<string, unknown>>(
   sortingModelDef: Array<SortingDef<T>>,
-  columnsHash: Record<keyof T, ColumnDef<T>>,
+  columnsHash: Partial<Record<keyof T, ColumnDef<T>>>,
 ) => {
   const comparators = sortingModelDef.map(({ id, order }) => {
     const col = columnsHash[id]
+    if (!col) return () => 0
     const cmp = col.compare ?? defaultCompare[col.type]
     const factor = order === 'asc' ? 1 : -1
 
@@ -87,7 +88,7 @@ const buildComparator = <T extends Record<string, unknown>>(
 
 export const sortRows = <T extends Record<string, unknown>>(
   rowsDef: Array<T>,
-  columnsHash: Record<keyof T, ColumnDef<T>>,
+  columnsHash: Partial<Record<keyof T, ColumnDef<T>>>,
   sortingModelDef: Array<SortingDef<T>> = [],
 ) => {
   if (!sortingModelDef.length) return rowsDef

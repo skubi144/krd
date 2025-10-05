@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import clsx from 'clsx'
 import styles from '@/shared/components/data-grid/components/common/data-grid.module.scss'
-import { testId } from '@/shared/components/data-grid/components/common/testid.ts'
+import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
 
 const {
   rows: { rowSkeleton },
