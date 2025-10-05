@@ -7,7 +7,7 @@ $breakpoints: (
 
 // mixin
 @mixin device($device) {
-  $size: map-get($breakpoints, $device);
+  $size: map.get($breakpoints, $device);
 
   @if $size == null {
     @warn "Please provide proper device";
