@@ -65,7 +65,7 @@ export const DebtorView = () => {
         />
       </div>
       <div className={styles['debtor-view__data-grid']}>
-        <DataGrid {...listProps} loading={loading} />
+        <DataGrid idKey={'Id'} {...listProps} loading={loading} />
       </div>
     </BottomSheetSpacer>
   )

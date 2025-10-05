@@ -8,14 +8,14 @@ const style = { gridTemplateColumns: '1fr 1fr' }
 export const Cards = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
 ) => {
-  const { rows, columns: columnsState } = props
+  const { rows, columns: columnsState, idKey } = props
   const { columns } = columnsState
 
   return (
     <div className={styles['data-grid__rows']}>
       {rows.map((row) => (
         <div
-          key={row['Id'] as Key}
+          key={row[idKey] as Key}
           className={styles['data-grid__row']}
           style={style}
         >

@@ -84,10 +84,10 @@ export type UseListControllerResult<TData extends Record<string, unknown>> = {
   loading?: boolean
   view?: DataGridView
 }
-export interface DataGridProps<
-  TData extends Record<string, unknown>,
-> extends UseListControllerResult<TData> {
+export interface DataGridProps<TData extends Record<string, unknown>>
+  extends UseListControllerResult<TData> {
   EmptyComponent?: ReactNode
+  idKey: keyof TData
 }
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
@@ -107,6 +107,7 @@ export type HeaderProps<TData extends Record<string, unknown>> = {
 export type RowsProps<TData extends Record<string, unknown>> = {
   columns: ColumnsControllerResult<TData>
   rows: Array<TData>
+  idKey: keyof TData
 }
 
 export type CellProps<TData extends Record<string, unknown>> = {

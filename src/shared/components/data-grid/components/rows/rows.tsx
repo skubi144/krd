@@ -7,7 +7,7 @@ import { Cell } from '@/shared/components/data-grid/components/cell/cell.tsx'
 export const Rows = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
 ) => {
-  const { rows, columns: columnsState } = props
+  const { rows, columns: columnsState, idKey } = props
   const { columns } = columnsState
 
   return (
@@ -15,7 +15,7 @@ export const Rows = <T extends Record<string, unknown>>(
       {rows.map((row) => (
         <div
           role={'row'}
-          key={row['Id'] as Key}
+          key={row[idKey] as Key}
           className={styles['data-grid__row']}
           style={getGridColumnStyleDef(columns)}
         >
