@@ -5,7 +5,6 @@ $breakpoints: (
         "desktop": 1025px
 );
 
-// mixin
 @mixin device($device) {
   $size: map.get($breakpoints, $device);
 
