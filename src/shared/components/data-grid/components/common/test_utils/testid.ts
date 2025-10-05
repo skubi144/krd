@@ -2,7 +2,11 @@ export const testId = {
   rows: {
     rowSkeleton: 'row-skeleton',
   },
-  header:{
+  header: {
     sortIndicator: 'sort-indicator',
-  }
+  },
+  dataGrid: {
+    empty: 'empty',
+  },
+  card: 'card',
 } as const

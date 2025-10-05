@@ -3,7 +3,9 @@ import type { Key } from 'react'
 import type { RowsProps } from '@/shared/components/data-grid/components/common/types.ts'
 import styles from '@/shared/components/data-grid/components/common/data-grid.module.scss'
 import { Cell } from '@/shared/components/data-grid/components/cell/cell.tsx'
+import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
 
+const { card } = testId
 const style = { gridTemplateColumns: '1fr 1fr' }
 export const Cards = <T extends Record<string, unknown>>(
   props: RowsProps<T>,
@@ -12,7 +14,7 @@ export const Cards = <T extends Record<string, unknown>>(
   const { columns } = columnsState
 
   return (
-    <div className={styles['data-grid__rows']}>
+    <div data-testid={card} className={styles['data-grid__rows']}>
       {rows.map((row) => (
         <div
           role={'row'}
@@ -22,7 +24,10 @@ export const Cards = <T extends Record<string, unknown>>(
         >
           {columns.map((column) => (
             <Fragment key={column.id as Key}>
-              <div role={'columnheader'} className={styles['data-grid__header-cell']}>
+              <div
+                role={'columnheader'}
+                className={styles['data-grid__header-cell']}
+              >
                 {column.label}
               </div>
               <Cell

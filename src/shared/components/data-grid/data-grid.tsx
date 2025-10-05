@@ -5,6 +5,11 @@ import { Header } from '@/shared/components/data-grid/components/header/header.t
 import { Rows } from '@/shared/components/data-grid/components/rows/rows.tsx'
 import { RowsSkeleton } from '@/shared/components/data-grid/components/rows/rows-skeleton.tsx'
 import { Cards } from '@/shared/components/data-grid/components/cards/cards.tsx'
+import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
+
+const {
+  dataGrid: { empty },
+} = testId
 
 const DataGridWrapper: FC<PropsWithChildren> = ({ children }) => (
   <div className={styles['data-grid']}>{children}</div>
@@ -19,7 +24,9 @@ export const DataGrid = <
     loading,
     view,
     EmptyComponent = (
-      <div className={styles['data-grid__row--empty']}>Brak Danych</div>
+      <div data-testid={empty} className={styles['data-grid__row--empty']}>
+        Brak Danych
+      </div>
     ),
     rows,
   } = props
