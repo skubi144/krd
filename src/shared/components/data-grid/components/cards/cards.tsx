@@ -15,13 +15,14 @@ export const Cards = <T extends Record<string, unknown>>(
     <div className={styles['data-grid__rows']}>
       {rows.map((row) => (
         <div
+          role={'row'}
           key={row[idKey] as Key}
           className={styles['data-grid__row']}
           style={style}
         >
           {columns.map((column) => (
             <Fragment key={column.id as Key}>
-              <div className={styles['data-grid__header-cell']}>
+              <div role={'columnheader'} className={styles['data-grid__header-cell']}>
                 {column.label}
               </div>
               <Cell
