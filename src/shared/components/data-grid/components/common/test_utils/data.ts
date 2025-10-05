@@ -11,12 +11,13 @@ export type TestRow = {
   custom: string
 }
 
-const textColumn: ColumnDef<TestRow> = { id: 'text', type: 'text' }
-const numberColumn: ColumnDef<TestRow> = { id: 'number', type: 'number' }
-const dateColumn: ColumnDef<TestRow> = { id: 'date', type: 'date' }
+const textColumn: ColumnDef<TestRow> = { id: 'text', type: 'text', label: 'text' }
+const numberColumn: ColumnDef<TestRow> = { id: 'number', type: 'number', label: 'number' }
+const dateColumn: ColumnDef<TestRow> = { id: 'date', type: 'date', label: 'date' }
 const customColumn: ColumnDef<TestRow> = {
   id: 'custom',
   type: 'text',
+  label: 'custom',
   render: (v: unknown) => `custom:${v}`,
 }
 

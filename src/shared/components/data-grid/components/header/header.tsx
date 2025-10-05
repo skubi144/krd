@@ -10,6 +10,11 @@ import {
   ariaSort,
   sortIcon,
 } from '@/shared/components/data-grid/components/header/consts.tsx'
+import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
+
+const {
+  header: { sortIndicator },
+} = testId
 
 export const Header = <T extends Record<string, unknown>>(
   props: HeaderProps<T>,
@@ -63,6 +68,7 @@ export const Header = <T extends Record<string, unknown>>(
             {sortIcon[order ?? 'none']}
             {sorting && sorting.length > 1 && index !== undefined ? (
               <sup
+                data-testid={sortIndicator}
                 aria-label={`Kolumn ${column.label}, priorytet sortowania ${index + 1}`}
               >
                 {index + 1}
