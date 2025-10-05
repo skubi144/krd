@@ -11,7 +11,6 @@ export type TestRow = {
   custom: string
 }
 
-const idColumn: ColumnDef<TestRow> = { id: 'id', type: 'number' }
 const textColumn: ColumnDef<TestRow> = { id: 'text', type: 'text' }
 const numberColumn: ColumnDef<TestRow> = { id: 'number', type: 'number' }
 const dateColumn: ColumnDef<TestRow> = { id: 'date', type: 'date' }
@@ -24,7 +23,6 @@ const customColumn: ColumnDef<TestRow> = {
 export const testColumns: ColumnsControllerResult<TestRow> = {
   columns: [textColumn, numberColumn, dateColumn, customColumn],
   columnsHash: {
-    id: idColumn,
     text: textColumn,
     number: numberColumn,
     date: dateColumn,
