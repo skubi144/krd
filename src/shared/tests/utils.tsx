@@ -11,8 +11,8 @@ import {
 } from '@tanstack/react-router'
 import type { RenderOptions } from '@testing-library/react'
 import type { RegisteredRouter } from '@tanstack/react-router'
-import type { QueryClient } from '@tanstack/react-query'
-import type { ReactElement, ReactNode } from 'react'
+import type { FC, ReactElement, ReactNode } from 'react'
+import type { RouterQueryProvider } from '@/shared/integrations/tanstack-query/root-provider.tsx'
 import * as TanStackQueryProvider from '@/shared/integrations/tanstack-query/root-provider.tsx'
 
 type Routes = RegisteredRouter['routesByPath']
@@ -33,13 +33,11 @@ type MockRoute<T extends keyof Routes> = {
     ? Context
     : never
 }
-interface MyRouterContext {
-  queryClient: QueryClient
-}
+
 /**
  * Router wrapper component for use with renderHook and testing
  */
-export const MockedRouter: React.FC<MockedRouterProps> = ({
+export const MockedRouter: FC<MockedRouterProps> = ({
   initialLocation = '/',
   mockRoute,
   children,
@@ -48,7 +46,7 @@ export const MockedRouter: React.FC<MockedRouterProps> = ({
     initialEntries: [initialLocation],
   })
 
-  const testRouteTree = createRootRouteWithContext<MyRouterContext>()({
+  const testRouteTree = createRootRouteWithContext<RouterQueryProvider>()({
     component: () => (mockRoute ? <Outlet /> : children),
   })
 
@@ -78,7 +76,7 @@ export const MockedRouter: React.FC<MockedRouterProps> = ({
   )
 }
 
-export const renderWithRouter = async <R extends keyof Routes>(
+export const renderWithRouter = async <TRoute extends keyof Routes>(
   component: ReactElement,
   {
     initialLocation = '/',
@@ -86,7 +84,7 @@ export const renderWithRouter = async <R extends keyof Routes>(
     ...options
   }: {
     initialLocation?: string
-    mockRoute?: MockRoute<R>
+    mockRoute?: MockRoute<TRoute>
   } & RenderOptions = {},
 ): Promise<void> => {
   render(

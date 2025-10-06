@@ -25,3 +25,7 @@ export function Provider({
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
 }
+
+export interface RouterQueryProvider {
+  queryClient: QueryClient
+}
