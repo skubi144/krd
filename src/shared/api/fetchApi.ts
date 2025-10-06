@@ -13,7 +13,7 @@ export async function fetchApi<TData = unknown, TError = ApiError<undefined>>(
 ): Promise<TData> {
   const { url, method = 'GET', body } = options
   const response = await fetch(
-    `https://rekrutacja-webhosting-it.krd.pl${url}`,
+    `${import.meta.env.VITE_API_URL}${url}`,
     {
       method,
       headers: { 'Content-Type': 'application/json' },
