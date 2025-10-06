@@ -143,9 +143,6 @@ describe('Debtor view tests', () => {
       mockRoute: { path: '/debtor' },
     })
     const headers = screen.getAllByRole('columnheader')
-    const nameColumn = headers.find((item) =>
-      /dłużnik/i.test(item.textContent),
-    )!
     const nameColumnIndex = headers.findIndex((item) =>
       /dłużnik/i.test(item.textContent),
     )
@@ -163,9 +160,9 @@ describe('Debtor view tests', () => {
 
     expect(sortedNameList).toEqual(nameAsc);
 
-    await user.click(nameColumn)
+    await user.click(headers[nameColumnIndex])
 
-    expect(nameColumn).toHaveAttribute('aria-sort', 'descending')
+    expect(headers[nameColumnIndex]).toHaveAttribute('aria-sort', 'descending')
 
     const nameDesc = await waitFor(() =>
       screen
