@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, it } from 'vitest'
-import { screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { screen, within } from '@testing-library/react'
 import { waitFor } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 import { DebtorView } from '@/modules/debt/view/debtor-view.tsx'
@@ -106,7 +106,6 @@ describe('Debtor view tests', () => {
     const query = '111'
     const input = screen.getByRole('textbox')
     await user.type(input, `${query}{Enter}`)
-
     await waitFor(() => {
       filteredDebtList.forEach((debtor) => {
         screen.getByText(debtor.Name)
@@ -121,5 +120,60 @@ describe('Debtor view tests', () => {
         screen.getByText(debtor.Name)
       })
     })
+  })
+
+  it('has initial sorting asc on name column when has proper init url', async () => {
+    await renderWithRouter(<DebtorView />, {
+      initialLocation:
+        '/debtor?sorting=%5B%7B"id"%3A"Name"%2C"order"%3A"asc"%7D%5D',
+      mockRoute: { path: '/debtor' },
+    })
+
+    const headers = screen.getAllByRole('columnheader')
+    const nameColumn = headers.find((item) => /dłużnik/i.test(item.textContent))
+
+    expect(nameColumn).toHaveAttribute('aria-sort', 'ascending')
+  })
+
+  it('allow to toggle sorting', async () => {
+    const user = userEvent.setup()
+    await renderWithRouter(<DebtorView />, {
+      initialLocation:
+        '/debtor?sorting=%5B%7B"id"%3A"Name"%2C"order"%3A"asc"%7D%5D',
+      mockRoute: { path: '/debtor' },
+    })
+    const headers = screen.getAllByRole('columnheader')
+    const nameColumn = headers.find((item) =>
+      /dłużnik/i.test(item.textContent),
+    )!
+    const nameColumnIndex = headers.findIndex((item) =>
+      /dłużnik/i.test(item.textContent),
+    )
+    const sortedNameList = debtList
+      .sort((a, b) => String(a.Name).localeCompare(String(b.Name)))
+      .map((debtor) => debtor.Name)
+
+    const nameAsc = await waitFor(() =>
+      screen
+        .getAllByRole('row')
+        .map(
+          (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
+        ),
+    )
+
+    expect(sortedNameList).toEqual(nameAsc);
+
+    await user.click(nameColumn)
+
+    expect(nameColumn).toHaveAttribute('aria-sort', 'descending')
+
+    const nameDesc = await waitFor(() =>
+      screen
+        .getAllByRole('row')
+        .map(
+          (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
+        ),
+    )
+    expect(sortedNameList.reverse()).toEqual(nameDesc)
   })
 })

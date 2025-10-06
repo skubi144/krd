@@ -69,5 +69,4 @@ export const DebtorView = () => {
       </div>
     </BottomSheetSpacer>
   )
-
 }
