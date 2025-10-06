@@ -1,4 +1,4 @@
-import { act, render, screen, within } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { DataGrid } from '@/shared/components/data-grid/data-grid'
@@ -10,6 +10,7 @@ import {
   textColumn,
 } from '@/shared/components/data-grid/components/common/test_utils/data'
 import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
+import { resizeWindow } from '@/shared/tests/utils.tsx'
 
 const { card } = testId
 
@@ -19,17 +20,6 @@ const GridContainer = () => {
     rows: testRows,
   })
   return <DataGrid idKey="id" {...controller} />
-}
-
-const resizeWindow = async (width: number) => {
-  await act(async () => {
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: width,
-    })
-    window.dispatchEvent(new Event('resize'))
-  })
 }
 
 describe('Data-Grid + useListController tests', () => {

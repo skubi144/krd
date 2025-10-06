@@ -65,7 +65,7 @@ export const DebtorListFilter: FC<DebtorListFilterParams> = (props) => {
                     SZUKAJ
                   </Button>
                   {search.phrase && (
-                    <Button variant="secondary" type="reset" title="Wyczyść filtry">
+                    <Button variant="secondary" type="reset" title="Reset">
                       <FontAwesomeIcon icon={faXmark} />
                     </Button>
                   )}

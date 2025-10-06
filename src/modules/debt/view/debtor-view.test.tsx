@@ -1,14 +1,125 @@
-import { describe, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, it } from 'vitest'
+import { screen } from '@testing-library/react'
+import { waitFor } from '@testing-library/dom'
+import userEvent from '@testing-library/user-event'
 import { DebtorView } from '@/modules/debt/view/debtor-view.tsx'
+import { renderWithRouter, resizeWindow } from '@/shared/tests/utils.tsx'
 import { testId } from '@/shared/components/data-grid/components/common/test_utils/testid.ts'
-
-const {rows:{rowSkeleton}} = testId;
+import { debtList } from '@/shared/tests/fixtures/debts-list.ts'
+import { filteredDebtList } from '@/shared/tests/fixtures/filtered-debts-list.ts'
 
 describe('Debtor view tests', () => {
-  it('load top 10 debtors', () => {
-    render(<DebtorView />)
+  let originalWidth: number
 
-    screen.getByTestId(rowSkeleton)
+  beforeEach(async () => {
+    originalWidth = window.innerWidth
+    await resizeWindow(1440)
+  })
+
+  afterEach(async () => {
+    await resizeWindow(originalWidth)
+  })
+
+  it('render skeletons when loading top 10 debt', async () => {
+    await renderWithRouter(<DebtorView />, {
+      initialLocation: '/debtor',
+      mockRoute: { path: '/debtor' },
+    })
+
+    screen.getAllByTestId(testId.rows.rowSkeleton)
+  })
+
+  it('render top 10 debtors on loaded, date has format dd-mm-yyyy and not render unnecessary data', async () => {
+    await renderWithRouter(<DebtorView />, {
+      initialLocation: '/debtor',
+      mockRoute: { path: '/debtor' },
+    })
+
+    await waitFor(() => {
+      debtList.forEach((debtor) => {
+        const [d] = debtor.Date.split('T')
+        const [yyyy, mm, dd] = d.split('-')
+
+        screen.getByText(`${dd}-${mm}-${yyyy}`)
+        screen.getByText(debtor.Name)
+        screen.getByText(debtor.NIP)
+        screen.getByText(debtor.Value)
+        expect(screen.queryByText(debtor.Price)).not.toBeInTheDocument()
+        expect(screen.queryByText(debtor.DocumentType)).not.toBeInTheDocument()
+        expect(screen.queryByText(debtor.Id)).not.toBeInTheDocument()
+        expect(screen.queryByText(debtor.Address)).not.toBeInTheDocument()
+      })
+    })
+
+    expect(screen.getAllByRole('row')).toHaveLength(debtList.length)
+  })
+
+  it('show error when query input has length < 3 and form submitted', async () => {
+    const user = userEvent.setup()
+    await renderWithRouter(<DebtorView />, {
+      initialLocation: '/debtor',
+      mockRoute: { path: '/debtor' },
+    })
+    const query = '11'
+    const input = screen.getByRole('textbox')
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(input).toHaveValue('')
+
+    await user.type(input, query)
+
+    expect(input).toHaveValue(query)
+
+    await user.keyboard('{Enter}')
+
+    screen.getByRole('alert')
+  })
+
+  it('show filtered rows when query input is valid and submitted', async () => {
+    const user = userEvent.setup()
+    await renderWithRouter(<DebtorView />, {
+      initialLocation: '/debtor',
+      mockRoute: { path: '/debtor' },
+    })
+    const query = '111'
+    const input = screen.getByRole('textbox')
+    await user.type(input, query)
+    await user.click(screen.getByRole('button'))
+
+    await waitFor(() => {
+      screen.getAllByTestId(testId.rows.rowSkeleton)
+    })
+
+    await waitFor(() => {
+      filteredDebtList.forEach((debtor) => {
+        screen.getByText(debtor.Name)
+      })
+    })
+  })
+
+  it('allow to clear query input and rollback rows to top 10 debt', async () => {
+    const user = userEvent.setup()
+    await renderWithRouter(<DebtorView />, {
+      initialLocation: '/debtor',
+      mockRoute: { path: '/debtor' },
+    })
+    const query = '111'
+    const input = screen.getByRole('textbox')
+    await user.type(input, `${query}{Enter}`)
+
+    await waitFor(() => {
+      filteredDebtList.forEach((debtor) => {
+        screen.getByText(debtor.Name)
+      })
+    })
+
+    // TODO: Add in future i18n, and create helper getByI18n :)
+    await user.click(screen.getByRole('button', { name: /Reset/i }))
+
+    await waitFor(() => {
+      debtList.forEach((debtor) => {
+        screen.getByText(debtor.Name)
+      })
+    })
   })
 })
