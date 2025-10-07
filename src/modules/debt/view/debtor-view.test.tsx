@@ -143,18 +143,18 @@ describe('Debtor view tests', () => {
       .sort((a, b) => a.Name.localeCompare(b.Name))
       .map((d) => d.Name)
 
-    const nameAsc = (
-      await screen.findAllByRole('row')
-    ).map((r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent)
+    const nameAsc = (await screen.findAllByRole('row')).map(
+      (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
+    )
 
     expect(nameAsc).toEqual(sortedNameList)
 
     await user.click(headers[nameColumnIndex])
     expect(headers[nameColumnIndex]).toHaveAttribute('aria-sort', 'descending')
 
-    const nameDesc = (
-      await screen.findAllByRole('row')
-    ).map((r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent)
+    const nameDesc = (await screen.findAllByRole('row')).map(
+      (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
+    )
 
     expect(nameDesc).toEqual([...sortedNameList].reverse())
   })
