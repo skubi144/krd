@@ -62,7 +62,7 @@ export const DebtorView = () => {
   }, [filteredDebts.dataUpdatedAt])
 
   useEffect(() => {
-    navigate({ search: { sorting: listProps.sorting } })
+    navigate({ search: (prev) => ({ ...prev, sorting: listProps.sorting }) })
   }, [listProps.sorting])
 
   return (
