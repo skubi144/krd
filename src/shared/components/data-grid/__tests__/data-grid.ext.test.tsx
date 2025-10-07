@@ -17,7 +17,7 @@ const { card } = testId
 const GridContainer = () => {
   const controller = useListController({
     columns: testColumns.columns,
-    rows: testRows,
+    initialRows: testRows,
   })
   return <DataGrid idKey="id" {...controller} />
 }
@@ -155,7 +155,7 @@ describe('Data-Grid + useListController tests', () => {
       const textIdx = testColumns.columns.findIndex((c) => c.id === 'text')
       const numberIdx = testColumns.columns.findIndex((c) => c.id === 'number')
 
-      const rows1 = await screen.findAllByRole('row')
+      const rows1 = await screen. findAllByRole('row')
       const textAfterAscAsc = rows1.map(
         (r) => within(r).getAllByRole('cell')[textIdx].textContent,
       )

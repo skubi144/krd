@@ -22,7 +22,6 @@ export const DebtorView = () => {
   const columns = useColumnsDef()
   const listProps = useListController({
     columns,
-    rows: [],
     initialSorting: search.sorting,
   })
   const {

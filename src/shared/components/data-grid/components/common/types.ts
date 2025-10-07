@@ -93,6 +93,7 @@ export interface DataGridProps<TData extends Record<string, unknown>>
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
+  initialRows?: Array<TData>
   initialSorting?: Array<SortingDef<TData>>
 }
 

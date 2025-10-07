@@ -10,9 +10,9 @@ import { useIsMobile } from '@/shared/utils/useIsMobile.ts'
 export const useListController = <TData extends Record<string, unknown>>(
   props: UseListControllerProps<TData>,
 ): UseListControllerResult<TData> => {
-  const { columns, initialSorting } = props
+  const { columns, initialSorting, initialRows = [] } = props
   const columnsState = useColumnsController(columns)
-  const [rows, setRows] = useState<Array<TData>>(() => [])
+  const [rows, setRows] = useState<Array<TData>>(() => initialRows)
   const { columnsHash } = columnsState
   const {
     rows: sortedRows,
