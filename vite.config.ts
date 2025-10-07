@@ -6,7 +6,6 @@ import pkg from './package.json' with { type: 'json' }
 
 const { version } = pkg
 export default defineConfig({
-  base: '/krd/',
   plugins: [
     TanStackRouterVite({ autoCodeSplitting: true }),
     viteReact(),
