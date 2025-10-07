@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import {
   RouterProvider,
   createRouter,
+  rewriteBasepath,
 } from '@tanstack/react-router'
 
 // eslint-disable-next-line import/order
@@ -19,6 +20,7 @@ import reportWebVitals from './reportWebVitals.ts'
 const TanStackQueryProviderContext = TanStackQueryProvider.getContext()
 const router = createRouter({
   routeTree,
+  rewrite: rewriteBasepath({ basepath: '/krd' }),
   context: {
     ...TanStackQueryProviderContext,
   },
