@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import type {
   UseListControllerProps,
   UseListControllerResult,
@@ -10,8 +10,9 @@ import { useIsMobile } from '@/shared/utils/useIsMobile.ts'
 export const useListController = <TData extends Record<string, unknown>>(
   props: UseListControllerProps<TData>,
 ): UseListControllerResult<TData> => {
-  const { columns, rows, initialSorting } = props
+  const { columns, initialSorting } = props
   const columnsState = useColumnsController(columns)
+  const [rows, setRows] = useState<Array<TData>>(() => [])
   const { columnsHash } = columnsState
   const {
     rows: sortedRows,
@@ -24,6 +25,7 @@ export const useListController = <TData extends Record<string, unknown>>(
 
   return useMemo(
     () => ({
+      setRows,
       rows: sortedRows,
       sorting,
       onSortChange,

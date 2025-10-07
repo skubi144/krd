@@ -17,12 +17,12 @@ import { useIsMobile } from '@/shared/utils/useIsMobile.ts'
 export const DebtorView = () => {
   const navigate = useNavigate({ from: '/debtor' })
   const search = useSearch({ from: '/debtor' })
-  const topDebts = useTopDebts(!search.phrase)
+  const topDebts = useTopDebts(search.phrase)
   const filteredDebts = useFilteredDebts(search.phrase)
   const columns = useColumnsDef()
   const listProps = useListController({
     columns,
-    rows: search.phrase ? (filteredDebts.data ?? []) : (topDebts.data ?? []),
+    rows: [],
     initialSorting: search.sorting,
   })
   const {
@@ -35,7 +35,6 @@ export const DebtorView = () => {
     resolver: zodResolver(debtorSearchSchema),
   })
   const isMobile = useIsMobile()
-
   const loading =
     listProps.loading || topDebts.isFetching || filteredDebts.isFetching
 
@@ -47,6 +46,21 @@ export const DebtorView = () => {
     await navigate({ search: { sorting: listProps.sorting } })
     reset({ phrase: '' })
   }
+
+  useEffect(() => {
+    console.log(topDebts.data, 'topdebts', topDebts.dataUpdatedAt)
+
+    if (!topDebts.data || !topDebts.dataUpdatedAt) return
+    console.log(topDebts.data, 'updating topdebts', topDebts.dataUpdatedAt)
+
+    listProps.setRows(topDebts.data)
+  }, [topDebts.dataUpdatedAt])
+
+  useEffect(() => {
+    console.log(filteredDebts.data, 'FILTERED', filteredDebts.dataUpdatedAt)
+    if (!filteredDebts.data || !filteredDebts.dataUpdatedAt) return
+    listProps.setRows(filteredDebts.data)
+  }, [filteredDebts.dataUpdatedAt])
 
   useEffect(() => {
     navigate({ search: { sorting: listProps.sorting } })

@@ -1,12 +1,13 @@
 import type { Debt } from '@/shared/integrations/models'
 import { fetchApi } from '@/shared/api/fetchApi.ts'
 
-export const topDebtsQuery = () => ({
-  queryKey: ['debt', 'top'],
+export const topDebtsQuery = (phrase?: string) => ({
+  queryKey: ['debt', 'top', phrase],
   queryFn: () =>
     fetchApi<Array<Debt>, undefined>({
       url: '/api/Recruitment/GetTopDebts',
     }),
+  enabled: !phrase,
   placeholderData: [],
 })
 

@@ -83,6 +83,7 @@ export type UseListControllerResult<TData extends Record<string, unknown>> = {
   sortingHash?: Partial<Record<keyof TData, SortingHash<TData>>>
   loading?: boolean
   view?: DataGridView
+  setRows: Dispatch<SetStateAction<Array<TData>>>
 }
 export interface DataGridProps<TData extends Record<string, unknown>>
   extends UseListControllerResult<TData> {
@@ -92,7 +93,6 @@ export interface DataGridProps<TData extends Record<string, unknown>>
 
 export type UseListControllerProps<TData extends Record<string, unknown>> = {
   columns: Array<ColumnDef<TData>>
-  rows: Array<TData>
   initialSorting?: Array<SortingDef<TData>>
 }
 
