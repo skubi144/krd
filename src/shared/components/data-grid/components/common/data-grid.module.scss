@@ -29,7 +29,10 @@ $commonBorder: 1px solid var(--color-secondary-300);
       color: var(--color-secondary-200);
       font-size: var(--font-size-xs);
       font-weight: 500;
-      cursor: pointer;
+
+      &--sortable {
+        cursor: pointer;
+      }
 
       @at-root .data-grid__header--vertical & {
         max-width: fit-content;
