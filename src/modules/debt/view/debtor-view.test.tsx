@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { screen, within } from '@testing-library/react'
-import { waitFor } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 import { DebtorView } from '@/modules/debt/view/debtor-view.tsx'
 import { renderWithRouter, resizeWindow } from '@/shared/tests/utils.tsx'
@@ -35,23 +34,23 @@ describe('Debtor view tests', () => {
       mockRoute: { path: '/debtor' },
     })
 
-    await waitFor(() => {
-      debtList.forEach((debtor) => {
-        const [d] = debtor.Date.split('T')
-        const [yyyy, mm, dd] = d.split('-')
+    for (const debtor of debtList) {
+      const [d] = debtor.Date.split('T')
+      const [yyyy, mm, dd] = d.split('-')
 
-        screen.getByText(`${dd}-${mm}-${yyyy}`)
-        screen.getByText(debtor.Name)
-        screen.getByText(debtor.NIP)
-        screen.getByText(debtor.Value)
-        expect(screen.queryByText(debtor.Price)).not.toBeInTheDocument()
-        expect(screen.queryByText(debtor.DocumentType)).not.toBeInTheDocument()
-        expect(screen.queryByText(debtor.Id)).not.toBeInTheDocument()
-        expect(screen.queryByText(debtor.Address)).not.toBeInTheDocument()
-      })
-    })
+      await screen.findByText(`${dd}-${mm}-${yyyy}`)
+      await screen.findByText(debtor.Name)
+      await screen.findByText(debtor.NIP)
+      await screen.findByText(debtor.Value)
 
-    expect(screen.getAllByRole('row')).toHaveLength(debtList.length)
+      expect(screen.queryByText(debtor.Price)).not.toBeInTheDocument()
+      expect(screen.queryByText(debtor.DocumentType)).not.toBeInTheDocument()
+      expect(screen.queryByText(debtor.Id)).not.toBeInTheDocument()
+      expect(screen.queryByText(debtor.Address)).not.toBeInTheDocument()
+    }
+
+    const rows = await screen.findAllByRole('row')
+    expect(rows).toHaveLength(debtList.length)
   })
 
   it('show error when query input has length < 3 and form submitted', async () => {
@@ -67,7 +66,6 @@ describe('Debtor view tests', () => {
     expect(input).toHaveValue('')
 
     await user.type(input, query)
-
     expect(input).toHaveValue(query)
 
     await user.keyboard('{Enter}')
@@ -83,18 +81,15 @@ describe('Debtor view tests', () => {
     })
     const query = '111'
     const input = screen.getByRole('textbox')
+
     await user.type(input, query)
     await user.click(screen.getByRole('button'))
 
-    await waitFor(() => {
-      screen.getAllByTestId(testId.rows.rowSkeleton)
-    })
+    await screen.findAllByTestId(testId.rows.rowSkeleton)
 
-    await waitFor(() => {
-      filteredDebtList.forEach((debtor) => {
-        screen.getByText(debtor.Name)
-      })
-    })
+    for (const debtor of filteredDebtList) {
+      await screen.findByText(debtor.Name)
+    }
   })
 
   it('allow to clear query input and rollback rows to top 10 debt', async () => {
@@ -106,20 +101,16 @@ describe('Debtor view tests', () => {
     const query = '111'
     const input = screen.getByRole('textbox')
     await user.type(input, `${query}{Enter}`)
-    await waitFor(() => {
-      filteredDebtList.forEach((debtor) => {
-        screen.getByText(debtor.Name)
-      })
-    })
 
-    // TODO: Add in future i18n, and create helper getByI18n :)
+    for (const debtor of filteredDebtList) {
+      await screen.findByText(debtor.Name)
+    }
+
     await user.click(screen.getByRole('button', { name: /Reset/i }))
 
-    await waitFor(() => {
-      debtList.forEach((debtor) => {
-        screen.getByText(debtor.Name)
-      })
-    })
+    for (const debtor of debtList) {
+      await screen.findByText(debtor.Name)
+    }
   })
 
   it('has initial sorting asc on name column when has proper init url', async () => {
@@ -142,35 +133,29 @@ describe('Debtor view tests', () => {
         '/debtor?sorting=%5B%7B"id"%3A"Name"%2C"order"%3A"asc"%7D%5D',
       mockRoute: { path: '/debtor' },
     })
+
     const headers = screen.getAllByRole('columnheader')
     const nameColumnIndex = headers.findIndex((item) =>
       /dłużnik/i.test(item.textContent),
     )
-    const sortedNameList = debtList
-      .sort((a, b) => String(a.Name).localeCompare(String(b.Name)))
-      .map((debtor) => debtor.Name)
 
-    const nameAsc = await waitFor(() =>
-      screen
-        .getAllByRole('row')
-        .map(
-          (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
-        ),
-    )
+    const sortedNameList = [...debtList]
+      .sort((a, b) => a.Name.localeCompare(b.Name))
+      .map((d) => d.Name)
 
-    expect(sortedNameList).toEqual(nameAsc);
+    const nameAsc = (
+      await screen.findAllByRole('row')
+    ).map((r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent)
+
+    expect(nameAsc).toEqual(sortedNameList)
 
     await user.click(headers[nameColumnIndex])
-
     expect(headers[nameColumnIndex]).toHaveAttribute('aria-sort', 'descending')
 
-    const nameDesc = await waitFor(() =>
-      screen
-        .getAllByRole('row')
-        .map(
-          (r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent,
-        ),
-    )
-    expect(sortedNameList.reverse()).toEqual(nameDesc)
+    const nameDesc = (
+      await screen.findAllByRole('row')
+    ).map((r) => within(r).getAllByRole('cell')[nameColumnIndex].textContent)
+
+    expect(nameDesc).toEqual([...sortedNameList].reverse())
   })
 })
