@@ -38,7 +38,7 @@ export const DebtorView = () => {
     listProps.loading || topDebts.isFetching || filteredDebts.isFetching
 
   const onSubmit: SubmitHandler<DebtorForm> = async (data) => {
-    await navigate({ search: data })
+    await navigate({ search: (prev) => ({ ...prev, ...data }) })
   }
 
   const handleClear = async () => {
