@@ -86,7 +86,7 @@ export type UseListControllerResult<TData extends Record<string, unknown>> = {
   setRows: Dispatch<SetStateAction<Array<TData>>>
 }
 export interface DataGridProps<TData extends Record<string, unknown>>
-  extends UseListControllerResult<TData> {
+  extends Omit<UseListControllerResult<TData>, 'setRows'> {
   EmptyComponent?: ReactNode
   idKey: keyof TData
 }

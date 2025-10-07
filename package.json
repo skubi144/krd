@@ -9,7 +9,7 @@
     "start:hosted": "vite --port 3000 --host",
     "build": "vite build && tsc",
     "serve": "vite preview",
-    "test": "vitest run",
+    "test": "vitest --run",
     "lint": "eslint",
     "format": "prettier",
     "check": "prettier --write . && eslint --fix"
