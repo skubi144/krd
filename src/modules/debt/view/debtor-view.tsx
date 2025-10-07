@@ -53,8 +53,8 @@ export const DebtorView = () => {
   }, [topDebts.dataUpdatedAt])
 
   useEffect(() => {
-    console.log(filteredDebts.data, 'FILTERED', filteredDebts.dataUpdatedAt)
     if (!filteredDebts.data || !filteredDebts.dataUpdatedAt) return
+
     listProps.setRows(filteredDebts.data)
   }, [filteredDebts.dataUpdatedAt])
 
