@@ -12,7 +12,7 @@ const {
 } = testId
 
 const DataGridWrapper: FC<PropsWithChildren> = ({ children }) => (
-  <div className={styles['data-grid']}>{children}</div>
+  <div className={styles['data-grid']}>{children}123</div>
 )
 
 export const DataGrid = <
