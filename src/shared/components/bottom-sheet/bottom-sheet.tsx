@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
+import { useEffect, useRef, useState } from 'react'
 import styles from './bottom-sheet.module.scss'
 import type { FC, ReactNode } from 'react'
 import { VISIBLE_WHEN_CLOSED } from '@/shared/components/bottom-sheet/common.ts'
@@ -58,6 +58,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
       : `translateY(${closedY}px)`
 
     startY.current = null
+    document.body.style.userSelect = ''
     window.removeEventListener('pointermove', handlePointerMove)
     window.removeEventListener('pointerup', handlePointerUp)
   }
@@ -67,6 +68,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
     baseY.current = open ? 0 : closedY
     if (contentRef.current) contentRef.current.style.transition = 'none'
 
+    document.body.style.userSelect = 'none'
     window.addEventListener('pointermove', handlePointerMove)
     window.addEventListener('pointerup', handlePointerUp)
   }
@@ -74,9 +76,9 @@ export const BottomSheet: FC<BottomSheetProps> = ({
   return (
     <div
       aria-hidden={open}
-      aria-label={"Bottom sheet"}
-      aria-modal={'true'}
-      role={'dialog'}
+      aria-label="Bottom sheet"
+      aria-modal="true"
+      role="dialog"
       className={clsx(styles.bottomSheet, {
         [styles['bottomSheet--open']]: open,
       })}

@@ -7,6 +7,7 @@ $black: rgba(0, 0, 0, 0.15);
   justify-content: center;
   align-items: flex-end;
   z-index: 1000;
+  pointer-events: none;
 
   &__overlay {
     position: absolute;
@@ -30,6 +31,7 @@ $black: rgba(0, 0, 0, 0.15);
     flex-direction: column;
     overflow: hidden;
     filter: drop-shadow(0 -4px 12px $black);
+    pointer-events: auto;
   }
 
   &__header {
@@ -50,12 +52,6 @@ $black: rgba(0, 0, 0, 0.15);
     margin-bottom: 0.75rem;
   }
 
-  &__title {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
   &__body {
     padding: 0 1rem 2rem;
     overflow-y: auto;
@@ -63,6 +59,8 @@ $black: rgba(0, 0, 0, 0.15);
   }
 
   &--open {
+    pointer-events: auto;
+
     .bottomSheet__overlay {
       opacity: 1;
       pointer-events: auto;
