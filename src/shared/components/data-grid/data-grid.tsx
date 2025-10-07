@@ -11,6 +11,15 @@ const {
   dataGrid: { empty },
 } = testId
 
+const Loader = () => (
+  <>
+    <RowsSkeleton />
+    <div role="status" aria-live="polite" className="sr-only">
+      Ładowanie danych
+    </div>
+  </>
+)
+
 const DataGridWrapper: FC<PropsWithChildren> = ({ children }) => (
   <div className={styles['data-grid']}>{children}</div>
 )
@@ -46,20 +55,11 @@ export const DataGrid = <
   return (
     <DataGridWrapper>
       {view === 'cards' ? (
-        <Cards {...props} />
+        <>{loading ? <Loader /> : <Cards {...props} />}</>
       ) : (
         <>
           <Header {...props} />
-          {loading ? (
-            <>
-              <RowsSkeleton />
-              <div role="status" aria-live="polite" className="sr-only">
-                Ładowanie danych
-              </div>
-            </>
-          ) : (
-            <Rows {...props} />
-          )}
+          {loading ? <Loader /> : <Rows {...props} />}
         </>
       )}
     </DataGridWrapper>
